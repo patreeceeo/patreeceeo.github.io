@@ -6,7 +6,7 @@ import { render } from "~/render.ts";
 await render()
 
 Deno.run({
-  cmd: ["deno", "run", "--allow-read", "--allow-net", "./scripts/prod.ts"]
+  cmd: ["deno", "run", "--allow-read", "--allow-net", "./scripts/prod.ts", "/docs"]
 });
 
 // Clever ways to refresh a chrome browser using deno?

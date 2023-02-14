@@ -4,7 +4,7 @@ import { serve } from "http";
 import { extname } from "path";
 import { contentType as getContentType } from "media_types"
 
-const ROOT = `${Deno.cwd()}/docs`
+const ROOT = `${Deno.cwd()}${Deno.args[0] || ''}`
 const STATIC_PATH = '/static'
 const indexHtml = await Deno.readFile(`${ROOT}/index.html`);
 
