@@ -32,6 +32,6 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "rtmp-web"
-          entrypoint: ../scripts/prod.ts
+          entrypoint: ./scripts/prod.ts
           root: docs
-          import-map: ../import_map.json
+          import-map: ./import_map.json

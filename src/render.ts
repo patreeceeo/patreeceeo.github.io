@@ -18,9 +18,12 @@ const getStandardTitle = (pageTitle: string) => `${pageTitle} - Codebaser.net`
 export async function render() {
   await ensureDir(DIST_DIR);
   await ensureDir(`${DIST_DIR}/static`);
+  await ensureDir(`${DIST_DIR}/scripts`);
   await copy(`${pwd}/src/fonts`, `${DIST_DIR}/static/fonts`);
   await copy(`${pwd}/src/styles`, `${DIST_DIR}/static/styles`);
   await copy(`${pwd}/src/images`, `${DIST_DIR}/static/images`);
+  await copy(`${pwd}/scripts/prod.ts`, `${DIST_DIR}/scripts/prod.ts`);
+  await copy(`${pwd}/import_map.json`, `${DIST_DIR}/import_map.json`);
 
   const documentTemplate = await Deno.readTextFile(`${pwd}/src/html/document.html`)
 
