@@ -1,5 +1,7 @@
 {
   "imports": {
+    "http": "https://deno.land/std@0.176.0/http/mod.ts",
+    "media_types": "https://deno.land/std@0.177.0/media_types/mod.ts",
     "fs": "https://deno.land/std@0.177.0/fs/mod.ts",
     "path": "https://deno.land/std@0.177.0/path/mod.ts",
     "preact": "https://unpkg.com/preact@10.12.0?module",

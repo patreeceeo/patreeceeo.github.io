@@ -5,6 +5,10 @@ import { render } from "~/render.ts";
 
 await render()
 
+Deno.run({
+  cmd: ["deno", "run", "--allow-read", "--allow-net", "./scripts/prod.ts"]
+});
+
 // Clever ways to refresh a chrome browser using deno?
 // Listen https://chromedevtools.github.io/devtools-protocol/1-2/Page/#method-reload
 // TODO (mh) make debounce this event from building
@@ -18,3 +22,4 @@ for await (const event of watcher) {
     });
   }
 }
+
