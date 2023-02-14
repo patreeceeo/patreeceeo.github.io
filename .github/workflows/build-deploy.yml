@@ -26,7 +26,7 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "patreeceeo.github.io"
+          project: "codebaser"
           entrypoint: ./scripts/prod.ts
           root: docs
           import-map: ./import_map.json
