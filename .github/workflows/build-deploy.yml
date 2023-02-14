@@ -23,11 +23,6 @@ jobs:
       - name: Build
         run: ./scripts/render.ts
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: 'docs'
-
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
