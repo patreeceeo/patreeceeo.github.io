@@ -22,7 +22,7 @@ export async function render() {
   await copy(`${pwd}/src/fonts`, `${DIST_DIR}/static/fonts`);
   await copy(`${pwd}/src/styles`, `${DIST_DIR}/static/styles`);
   await copy(`${pwd}/src/images`, `${DIST_DIR}/static/images`);
-  await copy(`${pwd}/scripts/prod.ts`, `${DIST_DIR}/scripts/prod.ts`);
+  await copy(`${pwd}/scripts/server.ts`, `${DIST_DIR}/scripts/server.ts`);
   await copy(`${pwd}/import_map.json`, `${DIST_DIR}/import_map.json`);
 
   const documentTemplate = await Deno.readTextFile(`${pwd}/src/html/document.html`)
@@ -45,6 +45,16 @@ export async function render() {
       await ensureDir(deepDistDir);
       await write(`${deepDistDir}/index.html`, p.content);
     }
+  }
+
+
+  const compileProcess = Deno.run({
+    cmd: ["deno", "bundle", "./src/client/mod.ts", "./docs/static/client.js"]
+  })
+  const compileStatus = await compileProcess.status()
+
+  if(!compileStatus.success) {
+    console.log("Failed to compile client. Exit status:", compileStatus.code, "output:", compileProcess.stderr)
   }
 }
 
