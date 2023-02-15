@@ -5,12 +5,16 @@ interface MessageFromServer {
 connect()
 
 
-function connect() {
+function connect(reconnecting = false) {
   const wsProtocol = location.origin.startsWith('https') ? 'wss' : 'ws'
 
   const socket = new WebSocket(`${wsProtocol}://${location.host}/devSocket`);
   socket.onopen = () => {
     console.log("devSocket open!");
+    if(reconnecting) {
+      // assume something has been updated
+      handleResourceUpdate()
+    }
   };
   socket.onclose = () => {
     console.log("devSocket close! attempting to re-open");
@@ -24,7 +28,7 @@ function connect() {
   const interval = setInterval(() => {
     if (socket.readyState === socket.CLOSED) {
       clearInterval(interval)
-      connect();
+      connect(true);
     }
   }, 200);
 }
