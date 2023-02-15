@@ -6,7 +6,9 @@ connect()
 
 
 function connect() {
-  const socket = new WebSocket(`ws://${location.host}/devSocket`);
+  const wsProtocol = location.origin.startsWith('https') ? 'wss' : 'ws'
+
+  const socket = new WebSocket(`${wsProtocol}://${location.host}/devSocket`);
   socket.onopen = () => {
     console.log("devSocket open!");
   };
