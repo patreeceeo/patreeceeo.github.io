@@ -1,5 +1,5 @@
 .KindWords {
-  --quote-mark-size: 8em;
+  --quote-mark-size: 4em;
   --image-size: 8rem;
   position: relative;
 }
@@ -20,13 +20,14 @@
   z-index: 1;
 }
 
-.KindWords blockquote:after {
+.KindWords blockquote {
+  position: relative;
+}
+
+.KindWords .KindWords-qm {
   --height: 8em;
-  content: "❠";
 
-  color: var(--color-hi);
-
-  font-size: var(--quote-mark-size);
+  height: var(--quote-mark-size);
 
   position: absolute;
   bottom: 0;
