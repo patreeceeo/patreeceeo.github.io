@@ -5,7 +5,8 @@ import { render } from "~/render.ts";
 
 await render()
 
-Deno.run({
+
+let serverProcess = Deno.run({
   cmd: ["deno", "run", "--allow-read", "--allow-net", "./scripts/prod.ts", "/docs"]
 });
 
@@ -19,6 +20,10 @@ for await (const event of watcher) {
     console.log(`Received ${event.kind} event for ${event.paths.join(", ")}`)
     Deno.run({
       cmd: ["deno", "run", "--allow-read", "--allow-write", "./scripts/render.ts"]
+    });
+    serverProcess.kill()
+    serverProcess = Deno.run({
+      cmd: ["deno", "run", "--allow-read", "--allow-net", "./scripts/prod.ts", "/docs"]
     });
   }
 }
