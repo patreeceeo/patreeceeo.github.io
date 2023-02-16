@@ -10,7 +10,7 @@ let indexHtml = await Deno.readFile(`${ROOT}/index.html`);
 
 const notFoundHtml = "404: Not found";
 
-let devSocket: WebSocket
+let liveSocket: WebSocket
 if (Deno.env.get("ENV") === "dev") {
 
   const { addProjectSourceModifyListener } = await import("~/util.ts")
@@ -21,8 +21,8 @@ if (Deno.env.get("ENV") === "dev") {
 
     indexHtml = await Deno.readFile(`${ROOT}/index.html`);
 
-    if(devSocket?.readyState === devSocket?.OPEN) {
-      devSocket.send(JSON.stringify({type: "resourceUpdate"}))
+    if(liveSocket?.readyState === liveSocket?.OPEN) {
+      liveSocket.send(JSON.stringify({type: "resourceUpdate"}))
     }
   })
 }
@@ -36,14 +36,13 @@ await serve(async (request) => {
     return htmlResponse(indexHtml);
   }
 
-  // TODO isDev fn
-  if (Deno.env.get("ENV") === "dev" && url.pathname === "/devSocket") {
-    console.log("devSocket requested!")
+  if (url.pathname === "/liveSocket") {
+    console.log("liveSocket requested!")
     const {socket, response} = Deno.upgradeWebSocket(request)
     socket.onopen = () => {
-      console.log("devSocket open!")
+      console.log("liveSocket open!")
     }
-    devSocket = socket
+    liveSocket = socket
     return response
   }
 

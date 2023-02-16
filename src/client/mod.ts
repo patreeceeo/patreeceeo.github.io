@@ -8,16 +8,16 @@ connect()
 function connect(reconnecting = false) {
   const wsProtocol = location.origin.startsWith('https') ? 'wss' : 'ws'
 
-  const socket = new WebSocket(`${wsProtocol}://${location.host}/devSocket`);
+  const socket = new WebSocket(`${wsProtocol}://${location.host}/liveSocket`);
   socket.onopen = () => {
-    console.log("devSocket open!");
+    console.log("liveSocket open!");
     if(reconnecting) {
       // assume something has been updated
       handleResourceUpdate()
     }
   };
   socket.onclose = () => {
-    console.log("devSocket close! attempting to re-open");
+    console.log("liveSocket close! attempting to re-open");
   };
 
   socket.onmessage = routeMessage;
@@ -38,7 +38,7 @@ const socketRouter = {
 };
 
 function routeMessage(message: MessageEvent) {
-  console.log("devSocket received", message.data);
+  console.log("liveSocket received", message.data);
   const parsedMessage = JSON.parse(message.data) as MessageFromServer;
 
   const handler = socketRouter[parsedMessage.type];
