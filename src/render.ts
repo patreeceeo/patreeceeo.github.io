@@ -28,9 +28,9 @@ export async function render() {
   const documentTemplate = await Deno.readTextFile(`${pwd}/src/html/document.html`)
 
   const pages = [
-    {filePath: 'index', content: renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home()})},
-    {filePath: 'post/deno', content: renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post()})},
-    {filePath: 'post/persistent_http', content: renderTemplate(documentTemplate, {title: getStandardTitle("Persistent HTTP"), content: Posts.PersistHttp.Post()})},
+    {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home()})},
+    {filePath: 'post/deno', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post()})},
+    {filePath: 'post/persistent_http', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Persistent HTTP"), content: Posts.PersistHttp.Post()})},
   ];
 
   for (const target of getStaticTargets()) {

@@ -2,7 +2,7 @@ import htm from "htm";
 import { relative, SEP } from "path";
 import { h } from "preact";
 import { VNode, ComponentType } from "types/preact";
-export { renderTemplate } from "~/util/template.ts";
+export { renderTemplate, renderTemplateFile } from "~/util/template.ts";
 export type { TemplateData } from "~/util/template.ts";
 export {
   _useStyleSheet as useStyleSheet,
