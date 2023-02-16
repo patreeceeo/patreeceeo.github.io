@@ -1,7 +1,8 @@
 .KindWords {
-  --quote-mark-size: 4em;
-  --image-size: 8rem;
+  --quote-mark-size: 4rem;
+  --image-size: 6rem;
   position: relative;
+  margin-bottom: 3rem;
 }
 
 .KindWords figure {
@@ -20,13 +21,7 @@
   z-index: 1;
 }
 
-.KindWords blockquote {
-  position: relative;
-}
-
 .KindWords .KindWords-qm {
-  --height: 8em;
-
   height: var(--quote-mark-size);
 
   position: absolute;
