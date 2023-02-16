@@ -8,7 +8,7 @@ const ROOT = `${Deno.cwd()}${Deno.args[0] || ""}`;
 const STATIC_PATH = "/static";
 let indexHtml = await Deno.readFile(`${ROOT}/index.html`);
 
-const notFoundHtml = "404: Not found";
+const notFoundHtml = "404: Not found :(";
 
 let liveSocket: WebSocket
 if (Deno.env.get("ENV") === "dev") {
