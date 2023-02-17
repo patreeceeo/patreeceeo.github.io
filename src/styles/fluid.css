@@ -1,6 +1,6 @@
 /* Inspired by https://css-tricks.com/simplified-fluid-typography/ */
 :root {
-  --fluid-text-min: 10;
+  --fluid-text-min: 12;
   --fluid-text-max: 30;
   --fluid-text-min-width: 280;
   --fluid-text-max-width: 2050;
