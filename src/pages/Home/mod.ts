@@ -32,8 +32,8 @@ export async function Home () {
   return renderTemplateFile("./template.html", {
     header: HeroHeader({
       headerHtml: "<h1 class=\"color-hi\">codebaser<wbr/>.net</h1>",
-      imageUrl: "/static/images/consider-lillies.png",
-      filter: "grayscale(1) brightness(0.75)"
+      imageUrl: "/static/images/consider-lillies-bw-postur.png",
+      filter: "brightness(0.75)"
     }),
     kindWords: (await Promise.all(kindWords.map(KindWords))).join("")
   }, import.meta);
