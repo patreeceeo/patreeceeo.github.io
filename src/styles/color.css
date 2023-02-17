@@ -12,3 +12,7 @@ body {
 .color-hi {
   color: var(--color-hi);
 }
+
+a {
+  color: #833;
+}
