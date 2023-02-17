@@ -21,6 +21,7 @@ h6 {
   font-size: var(--scale-1);
 }
 
+
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
   padding-top: 2rem;
@@ -38,4 +39,11 @@ p {
 
 pre {
   font-family: 'Nerd Font Mono', 'Courier New', Courier, monospace;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+h2.uppercase {
+  font-size: var(--scale-4);
 }
