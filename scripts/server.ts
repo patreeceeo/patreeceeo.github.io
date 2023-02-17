@@ -10,21 +10,20 @@ let indexHtml = await Deno.readFile(`${ROOT}/index.html`);
 
 const notFoundHtml = "404: Not found :(";
 
-let liveSocket: WebSocket
+let liveSocket: WebSocket;
 if (Deno.env.get("ENV") === "dev") {
-
-  const { addProjectSourceModifyListener } = await import("~/util.ts")
+  const { addProjectSourceModifyListener } = await import("~/util.ts");
 
   addProjectSourceModifyListener(async () => {
     const { render } = await import("~/render.ts");
-    await render()
+    await render();
 
     indexHtml = await Deno.readFile(`${ROOT}/index.html`);
 
-    if(liveSocket?.readyState === liveSocket?.OPEN) {
-      liveSocket.send(JSON.stringify({type: "resourceUpdate"}))
+    if (liveSocket?.readyState === liveSocket?.OPEN) {
+      liveSocket.send(JSON.stringify({ type: "resourceUpdate" }));
     }
-  })
+  });
 }
 
 await serve(async (request) => {
@@ -37,19 +36,25 @@ await serve(async (request) => {
   }
 
   if (url.pathname === "/liveSocket") {
-    console.log("liveSocket requested!")
-    const {socket, response} = Deno.upgradeWebSocket(request)
+    console.log("liveSocket requested!");
+    const { socket, response } = Deno.upgradeWebSocket(request);
     socket.onopen = () => {
-      console.log("liveSocket open!")
-    }
-    liveSocket = socket
-    return response
+      console.log("liveSocket open!");
+    };
+    liveSocket = socket;
+    return response;
+  }
+
+  if (url.pathname === "/robots.txt") {
+    return new Response(`User-agent: *
+Allow: /
+`);
   }
 
   if (
     url.pathname.startsWith(STATIC_PATH) &&
     (await isFile(assetPath)) &&
-  assetContentType
+    assetContentType
   ) {
     const content = await Deno.readFile(assetPath);
     return new Response(content, {
