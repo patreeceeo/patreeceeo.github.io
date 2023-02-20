@@ -3,7 +3,6 @@
 import { serve } from "http";
 import { extname } from "path";
 import { contentType as getContentType } from "media_types";
-import { loadModule } from "~/util.ts";
 
 const ROOT = `${Deno.cwd()}${Deno.args[0] || ""}`;
 const STATIC_PATH = "/static";
@@ -13,7 +12,7 @@ const notFoundHtml = "404: Not found :(";
 
 let liveSocket: WebSocket;
 if (Deno.env.get("ENV") === "dev") {
-  const { addProjectSourceModifyListener } = await import("~/util.ts");
+  const { addProjectSourceModifyListener, loadModule } = await import("~/util.ts");
 
   addProjectSourceModifyListener(async () => {
     // TODO debounce and other optimizations
