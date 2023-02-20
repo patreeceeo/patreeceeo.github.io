@@ -3,6 +3,7 @@
 import { serve } from "http";
 import { extname } from "path";
 import { contentType as getContentType } from "media_types";
+import { loadModule } from "~/util.ts";
 
 const ROOT = `${Deno.cwd()}${Deno.args[0] || ""}`;
 const STATIC_PATH = "/static";
@@ -15,7 +16,8 @@ if (Deno.env.get("ENV") === "dev") {
   const { addProjectSourceModifyListener } = await import("~/util.ts");
 
   addProjectSourceModifyListener(async () => {
-    const { render } = await import("~/render.ts");
+    // TODO debounce and other optimizations
+    const { render } = await loadModule(`~/render.ts`, import.meta);
     await render();
 
     indexHtml = await Deno.readFile(`${ROOT}/index.html`);

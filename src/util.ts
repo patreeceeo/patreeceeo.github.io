@@ -8,7 +8,7 @@ export {
   _useStyleSheet as useStyleSheet,
   _getStaticTargets as getStaticTargets,
 } from "~/internal/build_state.ts";
-export { addProjectSourceModifyListener } from "~/util/dev.ts";
+export { addProjectSourceModifyListener, loadModule } from "~/util/dev.ts";
 
 export const htmPreact = htm.bind(h) as (
   strings: TemplateStringsArray,

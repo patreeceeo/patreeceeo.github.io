@@ -4,9 +4,9 @@ import {
     ensureDir,
     copy as _copy,
 } from "fs";
-import {getStaticTargets, renderTemplate} from '~/util.ts';
-import {Home} from "~/pages/Home/mod.ts";
-import * as Posts from '~/posts/mod.ts';
+import {getStaticTargets, renderTemplate, loadModule} from '~/util.ts';
+
+const importMeta = import.meta
 
 
 const pwd = Deno.cwd()
@@ -26,6 +26,9 @@ export async function render() {
   await copy(`${pwd}/import_map.json`, `${DIST_DIR}/import_map.json`);
 
   const documentTemplate = await Deno.readTextFile(`${pwd}/src/html/document.html`)
+
+  const {Home} = await loadModule("~/pages/Home/mod.ts", importMeta)
+  const Posts = await loadModule('~/posts/mod.ts', importMeta)
 
   const pages = [
     {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home()})},

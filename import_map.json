@@ -8,6 +8,7 @@
     "types/preact": "./src/types/preact.d.ts",
     "htm": "https://unpkg.com/htm@3.1.1?module",
     "preact-render-to-string": "npm:preact-render-to-string@5.2.6",
+    "hash": "https://deno.land/std@0.71.0/hash/mod.ts",
     "~/": "./src/"
   }
 }
