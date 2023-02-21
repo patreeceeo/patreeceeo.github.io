@@ -17,7 +17,11 @@ if (Deno.env.get("ENV") === "dev") {
   addProjectSourceModifyListener(async () => {
     // TODO debounce and other optimizations
     const { render } = await loadModule(`~/render.ts`, import.meta);
-    await render();
+    try {
+      await render();
+    } catch (e) {
+      console.error(`Caught error while rendering ${e}`)
+    }
 
     indexHtml = await Deno.readFile(`${ROOT}/index.html`);
 
