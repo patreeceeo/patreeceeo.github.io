@@ -1,6 +1,8 @@
 import { KindWords, KindWordsProps } from "~/components/KindWords/mod.ts";
 import { renderTemplateFile } from "~/util.ts";
 import { HeroHeader } from "~/components/HeroHeader/mod.ts";
+import { ProjectGrid } from "~/components/ProjectGrid/mod.ts";
+import { projectsData } from "~/projects/mod.ts";
 
 const kindWords: Array<KindWordsProps> = [
   {
@@ -27,7 +29,7 @@ const kindWords: Array<KindWordsProps> = [
   },
 ];
 
-// TODO link to their websites
+
 export async function Home () {
   return renderTemplateFile("./template.html", {
     header: HeroHeader({
@@ -35,6 +37,7 @@ export async function Home () {
       imageUrl: "/static/images/consider-lillies-bw-postur.png",
       filter: "brightness(0.75)"
     }),
-    kindWords: (await Promise.all(kindWords.map(KindWords))).join("")
+    kindWords: (await Promise.all(kindWords.map(KindWords))).join(""),
+    projects: ProjectGrid(projectsData)
   }, import.meta);
 }

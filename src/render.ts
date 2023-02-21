@@ -29,11 +29,14 @@ export async function render() {
 
   const {Home} = await loadModule("~/pages/Home/mod.ts", importMeta)
   const Posts = await loadModule('~/posts/mod.ts', importMeta)
+  const Projects = await loadModule('~/projects/mod.ts', importMeta)
 
   const pages = [
     {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home()})},
     {filePath: 'post/deno', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post()})},
     {filePath: 'post/persistent_http', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Persistent HTTP"), content: Posts.PersistHttp.Post()})},
+    {filePath: 'project/notmario', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Not Mario"), content: Projects.NotMario.Project()})},
+    {filePath: 'project/loopyfruits', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Loopy Fruits"), content: Projects.LoopyFruits.Project()})},
   ];
 
   for (const target of getStaticTargets()) {
