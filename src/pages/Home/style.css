@@ -1,0 +1,37 @@
+
+
+.myphoto {
+  --size: min(25vw, 12rem);
+  height: var(--size); width: var(--size);
+  margin: var(--spacing-vertical) var(--spacing-horizontal);
+  transform: scaleX(-1);
+  filter: grayscale(1);
+}
+
+.speechbubble {
+  padding: 1em;
+  background-color: var(--color-hi);
+  position: relative;
+  z-index: 1;
+  border-radius: 0.25rem;
+}
+.speechbubble::after {
+  content: " ";
+  background-color: var(--color-hi);
+  height: 1em;
+  width: 1em;
+  position: absolute;
+  z-index: 0;
+}
+
+.speechbubble.speechbubble--left::after {
+  left: 100%;
+  top: calc(5/9 * 100%);
+  transform: scaleX(2.2) skew(15deg) translate(-25%, -50%) rotate(45deg);
+}
+
+.speechbubble.speechbubble--below::after {
+  bottom: 100%;
+  left: calc(5/7 * 100%);
+  transform: scaleY(2.2) skew(-15deg) translate(-50%, 25%) rotate(45deg);
+}

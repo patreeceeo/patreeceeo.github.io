@@ -1,5 +1,5 @@
 import { KindWords, KindWordsProps } from "~/components/KindWords/mod.ts";
-import { renderTemplateFile } from "~/util.ts";
+import { renderTemplateFile, useStyleSheet } from "~/util.ts";
 import { HeroHeader } from "~/components/HeroHeader/mod.ts";
 import { ProjectGrid, ProjectGridProps } from "~/components/ProjectGrid/mod.ts";
 import { NotMario, LoopyFruits } from "~/projects/mod.ts";
@@ -35,6 +35,8 @@ export const projectsGridProps: ProjectGridProps = {
     LoopyFruits.project
   ],
 }
+
+useStyleSheet('./style.css', import.meta)
 
 export async function Home () {
   return renderTemplateFile("./template.html", {

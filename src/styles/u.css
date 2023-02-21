@@ -7,6 +7,14 @@
   flex-direction: row;
 }
 
+.u-flex-column {
+  flex-direction: column;
+}
+
+.u-flex-center {
+  align-items: center;
+}
+
 .u-flex-no-shrink {
   flex-shrink: 0;
 }
