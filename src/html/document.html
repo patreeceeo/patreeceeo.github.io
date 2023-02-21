@@ -33,6 +33,7 @@
 
       :root {
         --spacing-horizontal: min(2em, 5vw);
+        --spacing-vertical: 2em;
         --page-width: calc(50rem - var(--spacing-horizontal) * 2);
         --page-w-sidebar-width: calc(var(--page-width) - var(--spacing-horizontal));
         --sidebar-max-width: 20%;
@@ -41,8 +42,8 @@
       .page {
         max-width: 100%;
         width: var(--page-width);
-        padding: var(--spacing-horizontal);
-        margin: 0 auto;
+        padding: 0 var(--spacing-horizontal);
+        margin: var(--spacing-vertical) auto;
       }
 
       .sidebar + .page {
