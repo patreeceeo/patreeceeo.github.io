@@ -58,7 +58,7 @@ Allow: /
 
   if (
     url.pathname.startsWith(STATIC_PATH) &&
-    (await isFile(assetPath)) &&
+    (await isFilePath(assetPath)) &&
     assetContentType
   ) {
     const content = await Deno.readFile(assetPath);
@@ -69,7 +69,7 @@ Allow: /
     });
   }
 
-  if (await isFile(htmlPath)) {
+  if (await isFilePath(htmlPath)) {
     const html = await Deno.readFile(htmlPath);
     return htmlResponse(html);
   }
@@ -77,7 +77,8 @@ Allow: /
   return htmlResponse(notFoundHtml);
 });
 
-async function isFile(path: string) {
+// TODO DRY once it's possible to import internally defined stuff in Deno Deploy
+async function isFilePath(path: string) {
   try {
     const info = await Deno.lstat(path);
     return info.isFile;

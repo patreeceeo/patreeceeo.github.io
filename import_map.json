@@ -9,6 +9,7 @@
     "htm": "https://unpkg.com/htm@3.1.1?module",
     "preact-render-to-string": "npm:preact-render-to-string@5.2.6",
     "hash": "https://deno.land/std@0.71.0/hash/mod.ts",
+    "async": "https://deno.land/std@0.174.0/async/mod.ts",
     "~/": "./src/"
   }
 }

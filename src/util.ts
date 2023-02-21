@@ -47,3 +47,12 @@ export function escapeHtmlString(str: string) {
     .replaceAll("'", "&#39;")
     .replaceAll('"', "&quot;");
 }
+
+export async function isFilePath(path: string) {
+  try {
+    const info = await Deno.lstat(path);
+    return info.isFile;
+  } catch {
+    return false;
+  }
+}

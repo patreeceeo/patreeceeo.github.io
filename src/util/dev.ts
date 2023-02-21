@@ -1,21 +1,41 @@
 import {createHash} from "hash"
-import { resolvePath } from "../util.ts";
+import { isFilePath, resolvePath } from "~/util.ts";
+import { debounce } from "async";
 
 interface Listener {
   (event: Deno.FsEvent): void
 }
 
+let listenerCount = 0
+let fileModifiedSincePreviousCall = false
+
 export async function addProjectSourceModifyListener(listener: Listener) {
   const watchPath = Deno.cwd() + "/src"
   const watcher = Deno.watchFs([watchPath], {recursive: true});
+
+  const debouncedListener = debounce((event) => {
+    console.log(`Received ${event.kind} event for ${event.paths.join(", ")}`)
+    listener(event)
+  }, 200)
+
+  listenerCount++
+  console.log(`Starting listener #${listenerCount} for ${watchPath}`)
+
   for await (const event of watcher) {
     if(["create", "modify", "remove"].includes(event.kind)) {
-      console.log(`Received ${event.kind} event for ${event.paths.join(", ")}`)
-      for(const path of event.paths) {
-        await updateContentHash(path)
+      if(["create", "modify"].includes(event.kind)) {
+        for(const path of event.paths) {
+          if(await isFilePath(path)) {
+            fileModifiedSincePreviousCall = true
+            await updateContentHash(path)
+          }
+        }
       }
-      listener(event)
     }
+    if(fileModifiedSincePreviousCall && Date.now()) {
+      debouncedListener(event)
+    }
+    fileModifiedSincePreviousCall = false
   }
 }
 
