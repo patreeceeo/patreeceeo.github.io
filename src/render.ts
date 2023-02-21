@@ -12,7 +12,7 @@ const importMeta = import.meta
 const pwd = Deno.cwd()
 const DIST_DIR = `${pwd}/docs`;
 
-const getStandardTitle = (pageTitle: string) => `${pageTitle} - Codebaser.net`
+const getStandardTitle = (pageTitle: string) => `${pageTitle} - Patrick Canfield`
 
 
 export async function render() {
