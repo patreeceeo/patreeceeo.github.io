@@ -1,8 +1,8 @@
 import { KindWords, KindWordsProps } from "~/components/KindWords/mod.ts";
 import { renderTemplateFile } from "~/util.ts";
 import { HeroHeader } from "~/components/HeroHeader/mod.ts";
-import { ProjectGrid } from "~/components/ProjectGrid/mod.ts";
-import { projectsData } from "~/projects/mod.ts";
+import { ProjectGrid, ProjectGridProps } from "~/components/ProjectGrid/mod.ts";
+import { NotMario, LoopyFruits } from "~/projects/mod.ts";
 
 const kindWords: Array<KindWordsProps> = [
   {
@@ -29,6 +29,12 @@ const kindWords: Array<KindWordsProps> = [
   },
 ];
 
+export const projectsGridProps: ProjectGridProps = {
+  items: [
+    NotMario.project,
+    LoopyFruits.project
+  ],
+}
 
 export async function Home () {
   return renderTemplateFile("./template.html", {
@@ -38,6 +44,6 @@ export async function Home () {
       filter: "brightness(0.75)"
     }),
     kindWords: (await Promise.all(kindWords.map(KindWords))).join(""),
-    projects: ProjectGrid(projectsData)
+    projects: ProjectGrid(projectsGridProps)
   }, import.meta);
 }

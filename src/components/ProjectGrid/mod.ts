@@ -1,17 +1,11 @@
-import { renderTemplateFile, TemplateData } from "~/util/template.ts";
-
-export interface ProjectGridItem extends TemplateData {
-  href: string
-  imageTitle: string
-  subheading: string
-  imageUrl: string
-}
+import { renderTemplateFile } from "~/util/template.ts";
+import { Project } from "~/projects/types.ts";
 
 export interface ProjectGridProps {
-  items: Array<ProjectGridItem>
+  items: Array<Project>
 }
 
-export function Item(props: ProjectGridItem) {
+export function Item(props: Project) {
   return renderTemplateFile("./item.html", props, import.meta)
 }
 
