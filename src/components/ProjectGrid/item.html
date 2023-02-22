@@ -1,16 +1,17 @@
 
 <figure>
   <a href="${href}">
-    <!-- IF img -->
+    <!-- *:img -->
     <img src="${previewAssetUrl}" alt="${previewCaption}" title="${previewCaption}" />
-    <!-- FI img -->
-    <!-- IF video -->
+    <!-- /:img -->
+
+    <!-- *:video -->
     <video
         autoplay loop muted playsinline
         src="${previewAssetUrl}"
     >
     </video>
-    <!-- FI video -->
+    <!-- /:video -->
   </a>
   <figcaption><a href="${href}">${subheading}</a></figcaption>
 </figure>

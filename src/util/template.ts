@@ -1,70 +1,128 @@
-import { LinkStruct, _getStyleSheets } from "~/internal/build_state.ts"
-import { readTextFileFromModule } from "~/util.ts"
+import { LinkStruct, _getStyleSheets } from "~/internal/build_state.ts";
+import { readTextFileFromModule, resolvePath } from "~/util.ts";
 
-const templateSlotRE = /\$\{(.*?)\}/g
-const templateBranchStartRE = /^\s*<!-- IF (.*?) -->$/gm
-const templateBranchEndRE = /^\s*<!-- FI (.*?) -->$/gm
+const slotRE = /\$\{(.*?)\}/g;
+const multStartRE = /^\s*<!--\s*\*\:(.*?)\s*-->$/g;
+const multEndRE = /^\s*<!--\s*\/\:(.*?)\s*-->$/g;
 
-export type TemplateValue = string | number
-export type AsyncTemplateData = Record<string, Promise<TemplateValue> | TemplateValue>
-export type TemplateData = Record<string, TemplateValue>
+export type TemplateValue = string | number;
+export type AsyncTemplateData = Record<
+  string,
+  Promise<TemplateValue> | TemplateValue
+>;
+export type TemplateData = Record<string, TemplateValue>;
 
-export const SPECIAL_SLOT_SYTLESHEETS = Symbol("StyleSheets")
+export const SPECIAL_SLOT_SYTLESHEETS = Symbol("StyleSheets");
 
-export async function renderTemplate(template: string, data: AsyncTemplateData) {
+export async function renderTemplate(
+  template: string,
+  data: AsyncTemplateData
+) {
   const derivedData = {
-    $styleSheetLinks: renderLinks(_getStyleSheets())
+    $styleSheetLinks: renderLinks(_getStyleSheets()),
+  };
+  const resolvedData: TemplateData = {};
+  for (const key in data) {
+    resolvedData[key] = await data[key];
   }
-  const resolvedData: TemplateData = {}
-  for(const key in data) {
-    resolvedData[key] = await data[key]
-  }
-  Object.assign(resolvedData, derivedData)
-  return evaluateSlots(evaluateBranches(template, resolvedData), resolvedData)
+  Object.assign(resolvedData, derivedData);
+  return evaluateSlots(evaluateBranches(template, resolvedData), resolvedData);
 }
 
-export async function renderTemplateFile(path: string, data: AsyncTemplateData, importMeta: ImportMeta) {
+let _currentTemplateFile: string | null = null
+export async function renderTemplateFile(
+  path: string,
+  data: AsyncTemplateData,
+  importMeta: ImportMeta,
+) {
   const template = await readTextFileFromModule(path, importMeta);
-  return await renderTemplate(template, data)
-}
-
-function evaluateBranches(template: string, data: TemplateData) {
-  const branches = findBranches(template)
-  const lines = template.split(/\r\n?|\n/)
-  for(const [key, branch] of Object.entries(branches)) {
-    if(!data[key]) {
-      lines.splice(branch.start, branch.end - branch.start)
-    }
-  }
-  return lines.join("\n")
-}
-
-function findBranches(template: string) {
-  const result: Record<string, {start: number, end: number}> = {}
-  for(const [lineIndex, line] of template.split(/\r\n?|\n/).entries()) {
-    const starts = templateBranchStartRE.exec(line)
-    const ends = templateBranchEndRE.exec(line)
-    if(starts) {
-      result[starts![1]] = {start: lineIndex, end: Infinity}
-    }
-    if(ends) {
-      result[ends![1]].end = lineIndex
-    }
-  }
+  // TODO
+  _currentTemplateFile = resolvePath(path, importMeta)
+  const result = await renderTemplate(template, data);
+  _currentTemplateFile = null
   return result
 }
 
-function evaluateSlots(template: string, data: TemplateData) {
-  return template.replaceAll(templateSlotRE, replaceTemplateSlot)
+function evaluateBranches(template: string, data: TemplateData) {
+  const branches = findBranches(template),
+    linesIn = template.split(/\r\n?|\n/),
+    linesOut = [] as Array<string>
+  let inputIndex = 0
 
-  function replaceTemplateSlot(_: string, slotName: string) {
-    return data[slotName]?.toString()
+  while(inputIndex < linesIn.length) {
+    const branch = branches.byLine[inputIndex]
+    if(branch) {
+      const expressionValue = evaluateVariable(data, branch.expressionId)
+      if(!expressionValue && branch.isStart) {
+        const branchEnd = branches.byExpression[branch.expressionId].inst[branch.instIndex].end
+        if(branchEnd < Infinity) {
+          inputIndex = branchEnd
+        } else {
+          throw new Error(`Template contains unterminated branch. ${_currentTemplateFile} L${inputIndex+1}: ${linesIn[inputIndex].trim()}`)
+        }
+      }
+    }
+    linesOut.push(linesIn[inputIndex])
+    inputIndex++
+  }
+
+  return linesOut.join("\n")
+}
+
+function findBranches(template: string) {
+  const result = {
+    byLine: [] as Array<{expressionId: string, isStart: boolean, instIndex: number}>,
+    byExpression: {} as Record<string, {inst: Array<{start: number, end: number}>}>,
+  }
+  const stack = [] as Array<{start: number, expressionId: string, instIndex: number}>;
+  for (const [lineIndex, line] of template.split(/\r\n?|\n/).entries()) {
+    const starts = multStartRE.exec(line);
+    multStartRE.lastIndex = 0
+    const ends = multEndRE.exec(line);
+    multEndRE.lastIndex = 0
+    if (starts) {
+      const expressionId = starts[1]
+      const expressionInfo = result.byExpression[expressionId] ||= {inst: []}
+      const instIndex = expressionInfo.inst.length
+      result.byLine[lineIndex] = {expressionId, isStart: true, instIndex}
+      expressionInfo.inst.push({ start: lineIndex, end: Infinity});
+      stack.push({start: lineIndex, expressionId, instIndex});
+    }
+    if (ends) {
+      const expressionId = ends[1]
+      const pairInfo = stack.pop()
+      if(pairInfo && pairInfo.expressionId === expressionId) {
+        const expressionInfo = result.byExpression[expressionId] ||= {inst: []}
+        const instItem = expressionInfo.inst[pairInfo?.instIndex]
+        result.byLine[lineIndex] = {expressionId, isStart: false, instIndex: pairInfo.instIndex}
+        instItem.end = lineIndex
+      } else {
+        throw new Error(`Template contains unbalanced branch. ${_currentTemplateFile} L${lineIndex+1}: ${ends[0].trim()}`)
+      }
+    }
+  }
+  return result;
+}
+
+function evaluateSlots(template: string, data: TemplateData) {
+  return template.replaceAll(slotRE, replacer);
+
+  function replacer(_: string, slotName: string) {
+    return "" + evaluateVariable(data, slotName)
   }
 }
 
-function renderLinks(links: Array<LinkStruct>) {
-  return links.map(({rel, href}) => {
-    return `<link rel="${rel}" href="${href}">`
-  }).join("\n")
+function evaluateVariable(data: TemplateData, varName: string) {
+  if(!(varName in data)) {
+    console.warn(`WARN: Template "${_currentTemplateFile}" contains unbound variable "${varName}"`)
+  }
+  return data[varName];
 }
 
+function renderLinks(links: Array<LinkStruct>) {
+  return links
+    .map(({ rel, href }) => {
+      return `<link rel="${rel}" href="${href}">`;
+    })
+    .join("\n");
+}
