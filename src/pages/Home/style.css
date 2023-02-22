@@ -14,6 +14,7 @@
   position: relative;
   z-index: 1;
   border-radius: 0.33rem;
+  margin-bottom: 1rem;
 }
 .speechbubble::after {
   --size: 1em;
