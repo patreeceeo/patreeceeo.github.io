@@ -1,3 +1,12 @@
 .ProjectGrid {
   display: grid;
+  --grid-item-width: calc(50% - 1rem);
+  --grid-item-height: 10rem;
+  grid-template-columns: var(--grid-item-width) var(--grid-item-width);
+  column-gap: 2rem;
+  row-gap: 2rem;
+}
+
+.ProjectGrid video {
+  max-width: 100%;
 }

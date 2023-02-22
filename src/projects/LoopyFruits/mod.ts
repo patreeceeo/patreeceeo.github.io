@@ -4,10 +4,11 @@ import { Project } from "~/projects/types.ts"
 
 export const project: Project = {
   href: "/project/loopyfruits",
-  imageUrl: "/static/images/loopyfruits.gif",
+  previewAssetUrl: "/static/images/loopyfruits.mp4",
+  previewCaption: "screencap",
+  previewType: "video",
   heading: "loopy fruits",
   subheading: "Playing with music theory, netcode and FP",
-  imageTitle: "screencap"
 }
 
 export function Page() {

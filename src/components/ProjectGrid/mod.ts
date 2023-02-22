@@ -1,6 +1,6 @@
 import { renderTemplateFile } from "~/util/template.ts";
 import { Project } from "~/projects/types.ts";
-import { useStyleSheet } from "../../util.ts";
+import { useStyleSheet } from "~/util.ts";
 
 export interface ProjectGridProps {
   items: Array<Project>
@@ -9,7 +9,14 @@ export interface ProjectGridProps {
 useStyleSheet('./style.css', import.meta)
 
 export function Item(props: Project) {
-  return renderTemplateFile("./item.html", props, import.meta)
+  return renderTemplateFile("./item.html", Object.assign(props, {
+    get img() {
+      return props.previewType === "img"
+    },
+    get video() {
+      return props.previewType === "video"
+    }
+  }), import.meta)
 }
 
 export async function ProjectGrid (props: ProjectGridProps) {

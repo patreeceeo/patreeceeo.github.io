@@ -4,6 +4,7 @@ export interface Project extends TemplateData {
   href: string
   heading: string
   subheading: string
-  imageTitle: string
-  imageUrl: string
+  previewCaption: string
+  previewAssetUrl: string
+  previewType: "img" | "video"
 }
