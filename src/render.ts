@@ -31,8 +31,6 @@ export async function render() {
   const Posts = await loadModule('~/posts/mod.ts', importMeta)
   const Projects = await loadModule('~/projects/mod.ts', importMeta)
 
-  console.log("Projects", Projects)
-
   const pages = [
     {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home()})},
     {filePath: 'post/deno', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post()})},
