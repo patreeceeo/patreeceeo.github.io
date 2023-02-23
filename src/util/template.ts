@@ -2,10 +2,12 @@ import { LinkStruct, _getStyleSheets } from "~/internal/build_state.ts";
 import { readTextFileFromModule, resolvePath } from "~/util.ts";
 
 const slotRE = /\$\{(.*?)\}/g;
+const loopElementSlotRE = /\$\{itemOf: (.*?)\}/g;
 const multStartRE = /^\s*<!--\s*\*\:(.*?)\s*-->$/g;
 const multEndRE = /^\s*<!--\s*\/\:(.*?)\s*-->$/g;
 
-export type TemplateValue = string | number;
+export type TemplateValueScalar = string | number;
+export type TemplateValue = TemplateValueScalar | Array<TemplateValueScalar>;
 export type AsyncTemplateData = Record<
   string,
   Promise<TemplateValue> | TemplateValue
@@ -43,6 +45,10 @@ export async function renderTemplateFile(
   return result
 }
 
+function countLoops(expressionValue: TemplateValue | Array<TemplateValue> ): number {
+  return expressionValue instanceof Array ? expressionValue.length : expressionValue ? 1 : 0
+}
+
 function evaluateBranches(template: string, data: TemplateData) {
   const branches = findBranches(template),
     linesIn = template.split(/\r\n?|\n/),
@@ -51,15 +57,19 @@ function evaluateBranches(template: string, data: TemplateData) {
 
   while(inputIndex < linesIn.length) {
     const branch = branches.byLine[inputIndex]
-    if(branch) {
+    if(branch?.isStart) {
       const expressionValue = evaluateVariable(data, branch.expressionId)
-      if(!expressionValue && branch.isStart) {
-        const branchEnd = branches.byExpression[branch.expressionId].inst[branch.instIndex].end
-        if(branchEnd < Infinity) {
-          inputIndex = branchEnd
-        } else {
-          throw new Error(`Template contains unterminated branch. ${_currentTemplateFile} L${inputIndex+1}: ${linesIn[inputIndex].trim()}`)
+      const loopMax = countLoops(expressionValue)
+      const branchEnd = branches.byExpression[branch.expressionId].inst[branch.instIndex].end
+      const loopBody = linesIn.slice(inputIndex + 1, branchEnd)
+      if(branchEnd < Infinity) {
+        linesOut.push(linesIn[inputIndex])
+        for(let loopCount = 0; loopCount < loopMax; loopCount++) {
+          linesOut.push(...loopBody.map((line) => evaluateLoopSlots(line, data, loopCount)))
         }
+        inputIndex = branchEnd
+      } else {
+        throw new Error(`Template contains unterminated branch. ${_currentTemplateFile} L${inputIndex+1}: ${linesIn[inputIndex].trim()}`)
       }
     }
     linesOut.push(linesIn[inputIndex])
@@ -112,11 +122,26 @@ function evaluateSlots(template: string, data: TemplateData) {
   }
 }
 
-function evaluateVariable(data: TemplateData, varName: string) {
-  if(!(varName in data)) {
+function evaluateLoopSlots(template: string, data: TemplateData, loopIndex: number) {
+  return template.replaceAll(loopElementSlotRE, replacer);
+
+  function replacer(_: string, slotName: string) {
+    return "" + evaluateArrayLookup(data, slotName, loopIndex)
+  }
+}
+
+function evaluateVariable(context: TemplateData, varName: string) {
+  if(!(varName in context)) {
     console.warn(`WARN: Template "${_currentTemplateFile}" contains unbound variable "${varName}"`)
   }
-  return data[varName];
+  return context[varName];
+}
+
+function evaluateArrayLookup(context: TemplateData, varName: string, index: number) {
+  if(!(varName in context)) {
+    console.warn(`WARN: Template "${_currentTemplateFile}" contains unbound variable "${varName}"`)
+  }
+  return context[varName][index]
 }
 
 function renderLinks(links: Array<LinkStruct>) {
