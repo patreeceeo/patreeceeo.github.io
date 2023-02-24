@@ -32,7 +32,7 @@ async function handleHttp(request: Request) {
     const indexHtml = await Deno.readFile(`&dollar;{rootDir}/public/index.html`)
     return new Response(indexHtml)
   } else if(url.pathname.startsWith("/public")) {
-    const content = await Deno.readFile(`&dollar;{rootDir}/&dollar{url.pathname}`)
+    const content = await Deno.readFile(`&dollar;{rootDir}/&dollar;{url.pathname}`)
     return new Response(content)
   }
   return new Response("Not found", {status: 404})

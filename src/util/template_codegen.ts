@@ -89,7 +89,7 @@ function renderJs(jsTemplate: string, params: Record<string, string>) {
 }
 
 function renderJsString(str: string) {
-  return `\`${str.replaceAll(/`/g, "\\`").trim()}\``;
+  return `\`${str.replaceAll(/`/g, "\\`")}\``;
 }
 
 function renderJsIife(fn: () => void, params: Record<string, string>) {
