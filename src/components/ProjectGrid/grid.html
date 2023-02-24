@@ -2,17 +2,17 @@
   <!-- #map items item -->
   <figure>
     <a href="${item.href}">
-      <!-- #map item.img -->
+      <!-- #map item.previewType==="img" -->
       <img src="${item.previewAssetUrl}" alt="${item.previewCaption}" title="${item.previewCaption}" />
-      <!-- /map item.img -->
+      <!-- /map item.previewType==="img" -->
 
-      <!-- #map item.video -->
+      <!-- #map item.previewType==="video" -->
       <video
           autoplay loop muted playsinline
           src="${item.previewAssetUrl}"
           >
       </video>
-      <!-- /map item.video -->
+      <!-- /map item.previewType==="video" -->
     </a>
     <figcaption><a href="${item.href}">${item.subheading}</a></figcaption>
   </figure>
