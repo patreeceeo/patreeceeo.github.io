@@ -21,16 +21,12 @@ function loopAppendLinesOut() {
     $loopBody;
   }
 }
-function appendLinesOut(line: string) {
-  linesOut.push(line);
-}
 /* END Templates */
 
 export function generateTemplateCode(template: string, data: TemplateData) {
   const linesIn = template.split(/\r\n?|\n/);
   const renderBodyLines = [
     `const linesOut = []`,
-    appendLinesOut.toString(),
     ...generateLines(linesIn, data),
   ];
 
@@ -49,7 +45,7 @@ function generateLines(linesIn: Array<string>, data: TemplateData) {
     const line = linesIn[lineIndex];
     const loop = loops.byLine[lineIndex];
 
-    renderBodyLines.push(`appendLinesOut(${renderJsString(line)})`);
+    renderBodyLines.push(`linesOut.push(${renderJsString(line)})`);
 
     if (loop) {
       if (loop.endLineIndex < Infinity) {
@@ -108,6 +104,7 @@ interface LoopInfo {
   identifiers: { $items: string; $item: string };
   endLineIndex: number;
 }
+// TODO replace with a actual lexer/parser
 function findLoops(templateLines: Array<string>) {
   const result = {
     byLine: [] as Array<LoopInfo>,
