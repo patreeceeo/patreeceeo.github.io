@@ -1,3 +1,20 @@
 <div class="ProjectGrid">
-  ${items}
+  <!-- #map items item -->
+  <figure>
+    <a href="${item.href}">
+      <!-- #map item.img -->
+      <img src="${item.previewAssetUrl}" alt="${item.previewCaption}" title="${item.previewCaption}" />
+      <!-- /map item.img -->
+
+      <!-- #map item.video -->
+      <video
+          autoplay loop muted playsinline
+          src="${item.previewAssetUrl}"
+          >
+      </video>
+      <!-- /map item.video -->
+    </a>
+    <figcaption><a href="${item.href}">${item.subheading}</a></figcaption>
+  </figure>
+  <!-- /map items item -->
 </div>

@@ -16,8 +16,8 @@ function renderTemplateTemplate() {
 let $items: TemplateDataCollection;
 let $loopBody: void;
 function loopAppendLinesOut() {
-  const items = $items instanceof Array ? $items : $items ? [$items] : [];
-  for (const $item of items) {
+  const __items__ = $items instanceof Array ? $items : $items ? [$items] : [];
+  for (const $item of __items__) {
     $loopBody;
   }
 }
@@ -85,13 +85,6 @@ function renderJs(jsTemplate: string, params: Record<string, string>) {
       throw new Error(`No replacement for js param ${paramName}`);
     }
   });
-  // result = jsTemplate.replaceAll(jsTemplateParamRE, (paramName: string) => {
-  //   if (params[paramName]) {
-  //     return params[paramName];
-  //   } else {
-  //     throw new Error(`No replacement for js param ${paramName}`);
-  //   }
-  // });
   return result;
 }
 
@@ -133,7 +126,7 @@ function findLoops(templateLines: Array<string>) {
         identifiers: {
           $items,
           // defaults to "item" if not specified
-          $item: $item ? $item : "item"
+          $item: $item ? $item : "__undefined__"
         },
         endLineIndex: Infinity,
       };

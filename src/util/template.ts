@@ -25,7 +25,6 @@ export async function renderTemplate(
   }
   Object.assign(resolvedData, derivedData);
   const jsString = generateTemplateCode(template, resolvedData);
-  console.log(jsString);
   return eval(jsString);
 }
 
