@@ -12,6 +12,7 @@ export const Post = () => {
       meta: `
         <p>last updated
         <time datetime="2023-02-09">2023, February 9th</time>
+        </p>
         `,
       height: "18rem",
       imageCaption: "Deno reading deno.news by <a href=\"#Duncan\">Duncan</a>. <a href=\"https://deno.land/artwork\">More fantastic Deno artwork</a>"
