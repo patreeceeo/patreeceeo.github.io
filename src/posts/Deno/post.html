@@ -29,10 +29,10 @@ async function handleHttp(request: Request) {
     socket.onerror = (socketEvent) => handleError(socket, socketEvent)
     return response
   } else if(url.pathname === "/") {
-    const indexHtml = await Deno.readFile(`${rootDir}/public/index.html`)
+    const indexHtml = await Deno.readFile(`&dollar;{rootDir}/public/index.html`)
     return new Response(indexHtml)
   } else if(url.pathname.startsWith("/public")) {
-    const content = await Deno.readFile(`${rootDir}/${url.pathname}`)
+    const content = await Deno.readFile(`&dollar;{rootDir}/&dollar{url.pathname}`)
     return new Response(content)
   }
   return new Response("Not found", {status: 404})
@@ -164,7 +164,7 @@ index 67fec14..814550e 100644
  import { handleOpen, handleClose, handleMessage, handleError } from "./game.ts"
  
  const rootDir = Deno.cwd()
--const indexHtml = Deno.readFileSync(`${rootDir}/public/index.html`)
+-const indexHtml = Deno.readFileSync(`&dollar;{rootDir}/public/index.html`)
  
 -async function handleHttp(conn: Deno.Conn) {
 -  for await (const httpEvent of Deno.serveHttp(conn)) {
@@ -180,7 +180,7 @@ index 67fec14..814550e 100644
 -      const response = new Response(indexHtml)
 -      httpEvent.respondWith(response)
 -    } else if(url.pathname.startsWith("/public")) {
--      const content = await Deno.readFile(`${rootDir}/${url.pathname}`)
+-      const content = await Deno.readFile(`&dollar;{rootDir}/&dollar;{url.pathname}`)
 -      const response = new Response(content)
 -      httpEvent.respondWith(response)
 -    }
@@ -194,10 +194,10 @@ index 67fec14..814550e 100644
 +    socket.onerror = (socketEvent) => handleError(socket, socketEvent)
 +    return response
 +  } else if(url.pathname === "/") {
-+    const indexHtml = await Deno.readFile(`${rootDir}/public/index.html`)
++    const indexHtml = await Deno.readFile(`&dollar;{rootDir}/public/index.html`)
 +    return new Response(indexHtml)
 +  } else if(url.pathname.startsWith("/public")) {
-+    const content = await Deno.readFile(`${rootDir}/${url.pathname}`)
++    const content = await Deno.readFile(`&dollar;{rootDir}/&dollar;{url.pathname}`)
 +    return new Response(content)
    }
 +  return new Response("Not found", {status: 404})
