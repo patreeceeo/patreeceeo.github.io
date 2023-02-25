@@ -1,0 +1,15 @@
+.Controls {
+  display: flex;
+  flex-direction: row;
+}
+
+.Controls dl {
+  flex-grow: 1;
+}
+
+.Controls dl dt {
+  font-weight: bold;
+}
+.Controls dl dl dd {
+  padding-left: 2rem;
+}

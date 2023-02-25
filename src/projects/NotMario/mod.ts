@@ -1,6 +1,7 @@
 import { Project } from "~/projects/types.ts"
 import { HeroHeader } from "~/components/HeroHeader/mod.ts"
 import { renderTemplateFile } from "~/util/template.ts"
+import { useStyleSheet } from "~/util.ts"
 
 export const project: Project = {
   href: "/project/notmario",
@@ -10,6 +11,8 @@ export const project: Project = {
   heading: "<s>mario</s>",
   subheading: "Playing with ECS, classic game mechanics and lore",
 }
+
+useStyleSheet("./style.css", import.meta)
 
 export function Page() {
   const props = {
