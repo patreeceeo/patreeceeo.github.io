@@ -1,3 +1,4 @@
+/* Note: I'm purposefully reinventing the wheel as a learning exercise */
 import { LinkStruct, _getStyleSheets } from "~/internal/build_state.ts";
 import { readTextFileFromModule, resolvePath } from "~/util.ts";
 import { generateTemplateCode } from "~/util/template_codegen.ts";

@@ -1,3 +1,4 @@
+/* Note: I'm purposefully reinventing the wheel as a learning exercise */
 import { TemplateData, TemplateDataCollection } from "~/util/template.ts";
 
 const loopStartRE = /^\s*<!--\s*#map (.+?) (.*?)\s*-->$/g;
