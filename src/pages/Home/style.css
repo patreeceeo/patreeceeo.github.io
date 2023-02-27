@@ -2,7 +2,7 @@
 
 .myphoto {
   --width: calc(var(--height) * 0.77);
-  --height: min(30vw, 15rem);
+  --height: min(33vw, 16rem);
   background-image: url('/static/images/me-duck.png');
   background-repeat: no-repeat;
   background-position: top right;
@@ -10,7 +10,8 @@
 }
 
 .myphoto-placeholder {
-  height: var(--height); width: var(--width);
+  width: calc(var(--width) - 0.5rem);
+  height: calc(var(--height) - 2rem);
   margin: var(--spacing-vertical) var(--spacing-horizontal);
 }
 
@@ -36,7 +37,8 @@
 }
 .speechbubble.speechbubble--left::after {
   left: 100%;
-  top: calc(5/9 * 100%);
+  /* top: calc(5/9 * 100%); */
+  top: calc(var(--height) * 0.26);
   border-top: var(--size) solid transparent;
   border-bottom: var(--size) solid transparent;
   border-left: var(--size) solid white;
@@ -44,7 +46,7 @@
 }
 .speechbubble.speechbubble--below::after {
   bottom: 100%;
-  left: calc(8/10 * 100%);
+  right: calc(var(--width) * .6);
   border-left: var(--size) solid transparent;
   border-right: var(--size) solid transparent;
   border-bottom: var(--size) solid white;
