@@ -1,5 +1,6 @@
 :root {
-  --color-bg: #d0dfff;
+  --color-bg: hsl(221, 100%, 91%);
+  --color-bg-dark: hsl(221, 100%, 87%);
   --color-text: #222;
   --color-hi: #fff;
 }
@@ -11,6 +12,10 @@ body {
 
 .color-hi {
   color: var(--color-hi);
+}
+
+.color-bg-dark {
+  background-color: var(--color-bg-dark);
 }
 
 a {

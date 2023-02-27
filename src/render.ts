@@ -33,8 +33,8 @@ export async function render() {
 
   const pages = [
     {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home()})},
-    {filePath: 'post/deno', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post()})},
-    {filePath: 'post/persistent_http', content: await renderTemplate(documentTemplate, {title: getStandardTitle("Persistent HTTP"), content: Posts.PersistHttp.Post()})},
+    {filePath: Posts.Deno.post.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post()})},
+    {filePath: Posts.PersistHttp.post.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Persistent HTTP"), content: Posts.PersistHttp.Post()})},
     {filePath: Projects.NotMario.project.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Not Mario"), content: Projects.NotMario.Page()})},
     {filePath: Projects.LoopyFruits.project.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Loopy Fruits"), content: Projects.LoopyFruits.Page()})},
   ];

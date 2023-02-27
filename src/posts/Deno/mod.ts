@@ -1,21 +1,27 @@
 import { readTextFileFromModule, renderTemplate } from "~/util.ts";
 import { HeroHeader } from "~/components/HeroHeader/mod.ts";
+import { Project } from "~/projects/types.ts";
+
+export const post: Project = {
+  href: "/post/deno",
+  heading: "Unearthing Deno",
+  subheading: "Notes on a promising new JavaScript runtime",
+  previewCaption: "Deno reading deno.news",
+  previewAssetUrl: "/static/images/deno_news.png",
+  previewType: "img"
+}
 
 const template = await readTextFileFromModule('./post.html', import.meta)
 export const Post = () => {
   return renderTemplate(template, {
     header: HeroHeader({
-      imageUrl: "/static/images/deno_news.png",
+      imageUrl: post.previewAssetUrl,
       headerHtml: `
-        <h1>Discovering Deno</h1>
+        <h1>${post.heading}</h1>
+        <h2>${post.subheading}</h2>
         `,
-      meta: `
-        <p>last updated
-        <time datetime="2023-02-09">2023, February 9th</time>
-        </p>
-        `,
-      height: "18rem",
-      imageCaption: "Deno reading deno.news by <a href=\"#Duncan\">Duncan</a>. <a href=\"https://deno.land/artwork\">More fantastic Deno artwork</a>"
+      imageCaption: "Deno reading deno.news by <a href=\"#Duncan\">Duncan</a>. <a href=\"https://deno.land/artwork\">More fantastic Deno artwork</a>",
+      filter: "opacity(0.5)"
     })
   })
 };

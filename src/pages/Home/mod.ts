@@ -2,6 +2,7 @@ import { KindWords, KindWordsProps } from "~/components/KindWords/mod.ts";
 import { renderTemplateFile, useStyleSheet } from "~/util.ts";
 import { ProjectGrid, ProjectGridProps } from "~/components/ProjectGrid/mod.ts";
 import { NotMario, LoopyFruits } from "~/projects/mod.ts";
+import * as Posts from "~/posts/mod.ts";
 
 const kindWords: Array<KindWordsProps> = [
   {
@@ -28,6 +29,13 @@ const kindWords: Array<KindWordsProps> = [
   },
 ];
 
+export const postGridProps: ProjectGridProps = {
+  items: [
+    Posts.Deno.post,
+    Posts.PersistHttp.post
+  ],
+}
+
 export const projectsGridProps: ProjectGridProps = {
   items: [
     NotMario.project,
@@ -40,6 +48,7 @@ useStyleSheet('./style.css', import.meta)
 export async function Home () {
   return renderTemplateFile("./template.html", {
     kindWords: (await Promise.all(kindWords.map(KindWords))).join(""),
+    posts: ProjectGrid(postGridProps),
     projects: ProjectGrid(projectsGridProps)
   }, import.meta);
 }
