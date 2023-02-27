@@ -1,11 +1,18 @@
 
 
+
 .myphoto {
-  --size: min(25vw, 12rem);
-  height: var(--size); width: var(--size);
+  --width: min(30vw, 12rem);
+  --height: 14rem;
+  background-image: url('/static/images/me-duck.png');
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: var(--width) min(calc(var(--height) + 4rem), 100%);
+}
+
+.myphoto-placeholder {
+  height: var(--height); width: var(--width);
   margin: var(--spacing-vertical) var(--spacing-horizontal);
-  transform: scaleX(-1);
-  filter: grayscale(1);
 }
 
 .speechbubble {
@@ -14,7 +21,7 @@
   position: relative;
   z-index: 1;
   border-radius: 0.33rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 .speechbubble::after {
   --size: 1em;
@@ -25,6 +32,9 @@
   z-index: 0;
 }
 
+.speechbubble.speechbubble--left {
+  margin-right: 1rem;
+}
 .speechbubble.speechbubble--left::after {
   left: 100%;
   top: calc(5/9 * 100%);
@@ -33,7 +43,6 @@
   border-left: var(--size) solid white;
   transform: skew(20deg) scaleX(1.5) translateY(-50%);
 }
-
 .speechbubble.speechbubble--below::after {
   bottom: 100%;
   left: calc(8/10 * 100%);
