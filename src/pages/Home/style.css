@@ -1,9 +1,8 @@
 
 
-
 .myphoto {
-  --width: min(30vw, 12rem);
-  --height: 14rem;
+  --width: calc(var(--height) * 0.77);
+  --height: min(30vw, 15rem);
   background-image: url('/static/images/me-duck.png');
   background-repeat: no-repeat;
   background-position: top right;
