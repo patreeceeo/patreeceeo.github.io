@@ -37,7 +37,6 @@
 }
 .speechbubble.speechbubble--left::after {
   left: 100%;
-  /* top: calc(5/9 * 100%); */
   top: calc(var(--height) * 0.26);
   border-top: var(--size) solid transparent;
   border-bottom: var(--size) solid transparent;
