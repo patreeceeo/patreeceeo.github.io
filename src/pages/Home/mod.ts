@@ -1,6 +1,5 @@
 import { KindWords, KindWordsProps } from "~/components/KindWords/mod.ts";
 import { renderTemplateFile, useStyleSheet } from "~/util.ts";
-import { HeroHeader } from "~/components/HeroHeader/mod.ts";
 import { ProjectGrid, ProjectGridProps } from "~/components/ProjectGrid/mod.ts";
 import { NotMario, LoopyFruits } from "~/projects/mod.ts";
 
@@ -40,11 +39,6 @@ useStyleSheet('./style.css', import.meta)
 
 export async function Home () {
   return renderTemplateFile("./template.html", {
-    header: HeroHeader({
-      headerHtml: "<h1 class=\"color-hi\">codebaser<wbr/>.net</h1>",
-      imageUrl: "/static/images/consider-lillies-bw-postur.png",
-      filter: "brightness(0.75)"
-    }),
     kindWords: (await Promise.all(kindWords.map(KindWords))).join(""),
     projects: ProjectGrid(projectsGridProps)
   }, import.meta);
