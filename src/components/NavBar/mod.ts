@@ -1,27 +1,33 @@
 import { renderTemplateFile } from "~/util/template.ts";
 import { useStyleSheet } from "~/util.ts";
 
-interface Link {
-  href: string,
-  children: string
+interface NavItem {
+  html: string;
 }
 
 export interface NavBarProps {
-  links: Array<Link>
+  links: Array<NavItem>;
 }
 
-useStyleSheet('./NavBar.css', import.meta)
+useStyleSheet("./NavBar.css", import.meta);
 
-export function NavBar () {
+const linkedIn = {
+  style: `
+  height: 100%;
+  width: 1em;
+  `,
+  href: 'https://www.linkedin.com/in/patrick-lee-canfield/'
+};
+
+export function NavBar() {
   const props: NavBarProps = {
     links: [
-      {href:"", children: "home"},
-      {href:"", children: "blog"},
-      {href:"", children: "work"},
-      {href:"", children: "connect"},
-    ]
-  }
-  return renderTemplateFile("./NavBar.html", {
-    links: props.links
-  }, import.meta);
+      { html: `<a href="/">home</a>` },
+      { html: `<a href="/#blog">blog</a>` },
+      { html: `<a href="/#projects">projects</a>` },
+      { html: `<a href="/#refs">refs</a>` },
+      { html: `<a href="${linkedIn.href}"><img src="/static/images/linkedin.svg" alt="linkedin logo" title="my linkedin" style="${linkedIn.style}"></a>` },
+    ],
+  };
+  return renderTemplateFile("./NavBar.html", props, import.meta);
 }
