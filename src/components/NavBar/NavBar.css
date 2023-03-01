@@ -1,12 +1,12 @@
-
+/* Thanks to https://bholmes.dev/blog/building-a-sexy-mobile-ready-navbar-in-any-web-framework/ for the inspiration. */
 .NavBar-placeholder {
   height: 4rem;
   width: 100%;
 }
 
 .NavBar {
-  --toggle-width: min(2rem, var(--spacing-horizontal));
-  --toggle-height: calc(var(--toggle-width) * 0.75);
+  --toggle-width: min(2.5rem, var(--spacing-horizontal));
+  --toggle-height: calc(var(--toggle-width) * 0.79);
   --padding-v: 0.5rem;
   --height: 4rem;
   position: fixed;
@@ -99,7 +99,7 @@
 .NavToggle .NavToggle-line2,
 .NavToggle .NavToggle-line3 {
   transition: transform 0.2s;
-  border-top: 0.15rem solid var(--color-text);
+  border-top: calc(var(--toggle-width) / 12) solid var(--color-text);
   transform-origin: center right;
 }
 
@@ -115,33 +115,26 @@
 
 @media(max-width: 1050px) {
   .NavBar {
-    --height: 5rem;
-    --toggle-width: 4rem;
-    font-size: var(--scale-4);
+    --height: 6rem;
+    --toggle-width: 5rem;
+    font-size: var(--scale-5);
     opacity: 1;
   }
 
   .NavBar.NavBar--open,
   .NavBar.NavBar--closing {
-    width: calc(100vw - 1rem);
     height: 100vh;
     height: -webkit-fill-available;
   }
   .NavBar .NavBar-inner,
-  .NavBar .NavBar-list,
   .NavBar .NavBar-slider--h,
-  .NavBar .NavBar-slider--v,
   .NavBar .NavBar-list {
     width: 100%;
     height: 100%;
   }
-  .NavBar .NavBar-inner {
-    align-items: start;
-  }
   .NavBar .NavBar-list {
     flex-direction: column;
-    width: 100%;
-    align-items: center;
+    align-items: end;
     justify-content: space-around;
   }
   .NavBar.NavBar--closed .NavBar-slider--h {
@@ -157,5 +150,13 @@
   }
   .NavBar.NavBar--open .NavBar-slider--v {
     transform: translateY(0);
+  }
+  .NavBar .NavBar-list {
+    padding: 0;
+  }
+  .NavToggle {
+    position: fixed;
+    top: 0.5rem;
+    right: 0.5rem;
   }
 }
