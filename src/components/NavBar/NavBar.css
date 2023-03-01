@@ -115,8 +115,8 @@
 
 @media(max-width: 1050px) {
   .NavBar {
-    --height: 6rem;
-    --toggle-width: 5rem;
+    --height: 5rem;
+    --toggle-width: 3.5rem;
     font-size: var(--scale-5);
     opacity: 1;
   }
