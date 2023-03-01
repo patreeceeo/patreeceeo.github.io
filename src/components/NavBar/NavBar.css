@@ -124,6 +124,7 @@
   .NavBar.NavBar--open {
     width: calc(100vw - 1rem);
     height: 100vh;
+    height: -webkit-fill-available;
   }
   .NavBar .NavBar-inner,
   .NavBar .NavBar-list,
@@ -151,11 +152,9 @@
   .NavBar .NavBar-slider--v {
     transform: translateY(-100vh);
     height: 100vh;
+    height: -webkit-fill-available;
   }
   .NavBar.NavBar--open .NavBar-slider--v {
     transform: translateY(0);
-  }
-
-  .NavToggle {
   }
 }
