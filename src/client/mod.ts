@@ -81,6 +81,7 @@ const NavBar = (function NavBarInit() {
 
     el.classList.add("NavBar--mounted")
     handleWindowSize();
+    handleScrollWithoutDebouncing();
     update();
   }
 
@@ -97,7 +98,7 @@ const NavBar = (function NavBarInit() {
   function handleToggle() {
     state =
       state === "auto"
-        ? isWideEnoughToBeOpen
+        ? isWideEnoughToBeOpen && scrollY === 0
           ? "closed"
           : "open"
         : state === "open"
@@ -106,7 +107,7 @@ const NavBar = (function NavBarInit() {
     update();
   }
 
-  function handleScrollAfterDebouncing () {
+  function handleScrollWithoutDebouncing () {
     const oldValue = scrollY
     scrollY = window.scrollY
     if(oldValue !== scrollY) {
@@ -114,9 +115,10 @@ const NavBar = (function NavBarInit() {
     }
   }
 
-  const handleScroll = debounce(handleScrollAfterDebouncing, 200)
+  const handleScroll = debounce(handleScrollWithoutDebouncing, 200)
 
   function update() {
+    console.log({state})
     if (state === "open" || state === "auto" && isWideEnoughToBeOpen && scrollY === 0) {
       el.classList.add("NavBar--open");
       el.classList.remove("NavBar--closed");
