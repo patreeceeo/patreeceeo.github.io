@@ -75,12 +75,19 @@
 }
 
 .NavToggle {
+  background-color: var(--color-bg);
   width: var(--toggle-width);
-  height: var(--toggle-height);
-  cursor: pointer;
+  height: var(--toggle-width);
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  margin: var(--padding-v) 0;
+.NavToggle--inner {
+  width: calc(0.8 * var(--toggle-width));
+  height: calc(0.8 * var(--toggle-height));
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -150,6 +157,5 @@
   }
 
   .NavToggle {
-    background-color: var(--color-bg);
   }
 }

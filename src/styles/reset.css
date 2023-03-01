@@ -82,3 +82,7 @@ select {
 main {
   width: 100%;
 }
+
+[role=button] {
+  cursor: pointer;
+}
