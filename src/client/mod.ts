@@ -1,19 +1,20 @@
+import { debounce } from "async";
+
 interface MessageFromServer {
   type: "resourceUpdate";
 }
 
-connect()
-
+connect();
 
 function connect(reconnecting = false) {
-  const wsProtocol = location.origin.startsWith('https') ? 'wss' : 'ws'
+  const wsProtocol = location.origin.startsWith("https") ? "wss" : "ws";
 
   const socket = new WebSocket(`${wsProtocol}://${location.host}/liveSocket`);
   socket.onopen = () => {
     console.log("liveSocket open!");
-    if(reconnecting) {
+    if (reconnecting) {
       // assume something has been updated
-      handleResourceUpdate()
+      handleResourceUpdate();
     }
   };
   socket.onclose = () => {
@@ -27,7 +28,7 @@ function connect(reconnecting = false) {
   };
   const interval = setInterval(() => {
     if (socket.readyState === socket.CLOSED) {
-      clearInterval(interval)
+      clearInterval(interval);
       connect(true);
     }
   }, 200);
@@ -56,40 +57,64 @@ function handleResourceUpdate() {
 /* More reason to migrate to Svelte, React... I guess. */
 
 setTimeout(() => {
-  NavBar.mount()
-}, 100)
+  NavBar.mount();
+}, 100);
 
-const NavBar = (function NavBarInit () {
-  let isOpen = window.innerWidth > 800
-  let el: HTMLElement
+const NavBar = (function NavBarInit() {
+  let state: "auto" | "open" | "closed" = "auto";
+  let isWideEnoughToBeOpen: boolean;
+  let el: HTMLElement;
   function mount() {
-    el = document.querySelector("#NavBar")!
+    el = document.querySelector("#NavBar")!;
 
-    if(!el) {
-      throw new Error("Couldn't find #NavBar in DOM")
+    if (!el) {
+      throw new Error("Couldn't find #NavBar in DOM");
     }
 
-    const elToggle = el?.querySelector(".NavToggle")
+    const elToggle = el?.querySelector(".NavToggle");
 
-    elToggle?.addEventListener("click", handleToggle)
+    elToggle?.addEventListener("click", handleToggle);
 
-    update()
+    globalThis.addEventListener("resize", handleWindowResize);
+
+    handleWindowSize();
+    update();
   }
 
+  function handleWindowSize() {
+    console.log("handleSize");
+    const oldValue = isWideEnoughToBeOpen;
+    isWideEnoughToBeOpen = window.innerWidth > 1050;
+    if (oldValue !== isWideEnoughToBeOpen) {
+      update();
+    }
+  }
+
+  const handleWindowResize = debounce(handleWindowSize, 200);
+
   function handleToggle() {
-    isOpen = !isOpen
-    update()
+    state =
+      state === "auto"
+        ? isWideEnoughToBeOpen
+          ? "closed"
+          : "open"
+        : state === "open"
+          ? "closed"
+          : "open";
+    update();
   }
 
   function update() {
-    if(isOpen) {
-      el.classList.replace("NavBar--closed", "NavBar--open")
+    if ((isWideEnoughToBeOpen && state === "auto") || state === "open") {
+      el.classList.add("NavBar--open");
+      el.classList.remove("NavBar--closed");
     } else {
-      el.classList.replace("NavBar--open", "NavBar--closed")
+      el.classList.add("NavBar--closed");
+      el.classList.remove("NavBar--open");
     }
   }
 
   return {
-    mount
-  }
-})()
+    mount,
+  };
+})();

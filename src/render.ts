@@ -33,7 +33,6 @@ export async function render() {
   const {NavBar} = await loadModule("~/components/NavBar/mod.ts", importMeta)
 
   const nav = await NavBar()
-  console.log({nav})
 
   const pages = [
     {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home(), nav})},
