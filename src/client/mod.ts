@@ -63,6 +63,7 @@ setTimeout(() => {
 const NavBar = (function NavBarInit() {
   let state: "auto" | "open" | "closed" = "auto";
   let isWideEnoughToBeOpen: boolean;
+  let scrollY = 0;
   let el: HTMLElement;
   function mount() {
     el = document.querySelector("#NavBar")!;
@@ -76,6 +77,7 @@ const NavBar = (function NavBarInit() {
     elToggle?.addEventListener("click", handleToggle);
 
     globalThis.addEventListener("resize", handleWindowResize);
+    globalThis.addEventListener("scroll", handleScroll);
 
     el.classList.add("NavBar--mounted")
     handleWindowSize();
@@ -104,12 +106,22 @@ const NavBar = (function NavBarInit() {
     update();
   }
 
+  function handleScrollAfterDebouncing () {
+    const oldValue = scrollY
+    scrollY = window.scrollY
+    if(oldValue !== scrollY) {
+      update()
+    }
+  }
+
+  const handleScroll = debounce(handleScrollAfterDebouncing, 200)
+
   function update() {
-    if (state === "open") {
+    if (state === "open" || state === "auto" && isWideEnoughToBeOpen && scrollY === 0) {
       el.classList.add("NavBar--open");
       el.classList.remove("NavBar--closed");
     }
-    if(state === "closed") {
+    if(state === "closed" || state === "auto" && scrollY > 0) {
       el.classList.add("NavBar--closed", "NavBar--closing");
       el.classList.remove("NavBar--open");
 
