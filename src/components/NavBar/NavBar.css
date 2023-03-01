@@ -113,6 +113,10 @@
   transform: rotate(45deg);
 }
 
+.NavBar .NavBar-mobileSpacer {
+  display: none;
+}
+
 @media(max-width: 1050px) {
   .NavBar {
     --height: 5rem;
@@ -158,5 +162,9 @@
     position: fixed;
     top: 0.5rem;
     right: 0.5rem;
+  }
+
+  .NavBar .NavBar-mobileSpacer {
+    display: initial;
   }
 }
