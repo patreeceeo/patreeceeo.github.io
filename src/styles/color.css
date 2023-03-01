@@ -1,8 +1,9 @@
 :root {
   --color-bg: hsl(221, 100%, 91%);
   --color-bg-dark: hsl(221, 100%, 87%);
-  --color-text: #222;
+  --color-text: hsl(221, 80%, 20%);
   --color-hi: #fff;
+  --color-link: hsl(221, 100%, 50%);
 }
 
 body {
@@ -18,6 +19,3 @@ body {
   background-color: var(--color-bg-dark);
 }
 
-a {
-  color: #833;
-}

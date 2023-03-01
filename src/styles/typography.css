@@ -34,7 +34,15 @@ h1, h2, h3, h4, h5, h6 {
 
 p, aside, figcaption, dl {
   margin-bottom: 1rem;
+}
+p, aside, figcaption, dl {
   font-family: 'Hyperlegible';
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-link);
+  text-shadow: 0.1em 0.1em 0 var(--color-hi);
 }
 
 aside {
@@ -50,4 +58,8 @@ pre {
 }
 h2.uppercase {
   font-size: var(--scale-4);
+}
+
+.font-family-mono {
+  font-family: 'Nerd Font Mono', 'Courier New', Courier, monospace;
 }

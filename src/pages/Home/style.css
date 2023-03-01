@@ -27,8 +27,9 @@
 }
 
 .speechbubble {
+  --bg-color: #f8f8f8;
   padding: 1em;
-  background-color: var(--color-hi);
+  background-color: var(--bg-color);
   position: relative;
   z-index: 1;
   border-radius: 0.33rem;
@@ -52,7 +53,7 @@
   top: 25%;
   border-top: var(--size) solid transparent;
   border-bottom: var(--size) solid transparent;
-  border-left: var(--size) solid white;
+  border-left: var(--size) solid var(--bg-color);
   transform: skew(20deg) scaleX(1.5) translateY(-50%);
 }
 .speechbubble.speechbubble--below::after {
@@ -60,6 +61,6 @@
   right: 18%;
   border-left: var(--size) solid transparent;
   border-right: var(--size) solid transparent;
-  border-bottom: var(--size) solid white;
+  border-bottom: var(--size) solid var(--bg-color);
   transform: skew(-20deg) scaleY(1.5) translateX(-50%);
 }
