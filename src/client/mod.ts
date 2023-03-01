@@ -77,6 +77,7 @@ const NavBar = (function NavBarInit() {
 
     globalThis.addEventListener("resize", handleWindowResize);
 
+    el.classList.add("NavBar--mounted")
     handleWindowSize();
     update();
   }
@@ -105,10 +106,13 @@ const NavBar = (function NavBarInit() {
   }
 
   function update() {
-    if ((isWideEnoughToBeOpen && state === "auto") || state === "open") {
+    console.log({isWideEnoughToBeOpen, state})
+    // if ((isWideEnoughToBeOpen && state === "auto") || state === "open") {
+    if (state === "open") {
       el.classList.add("NavBar--open");
       el.classList.remove("NavBar--closed");
-    } else {
+    }
+    if(state === "closed") {
       el.classList.add("NavBar--closed");
       el.classList.remove("NavBar--open");
     }

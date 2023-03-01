@@ -5,17 +5,29 @@
 }
 
 .NavBar {
-  --toggle-width: min(2.5rem, var(--spacing-horizontal));
+  --toggle-width: min(2rem, var(--spacing-horizontal));
   --toggle-height: calc(var(--toggle-width) * 0.75);
-  --padding-v: 1rem;
-  --height: calc(var(--toggle-height) + var(--padding-v) * 2);
+  --padding-v: 0.5rem;
+  --height: 4rem;
   position: fixed;
   z-index: 999;
   top: 0;
   width: 100%;
   height: var(--height);
   padding-right: 1rem;
-  transition: background-color 0.5s;
+  transition: background-color 0.5s, opacity 0.5s;
+  opacity: 0.66;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.NavBar:hover {
+  opacity: 1;
+}
+
+.NavBar.NavBar--mounted {
+  display: flex;
 }
 
 .NavBar.NavBar--closed {
@@ -50,10 +62,6 @@
   flex-direction: row;
   justify-content: end;
   align-items: center;
-  opacity: 0.66;
-}
-.NavBar .NavBar-inner:hover {
-  opacity: 1;
 }
 
 .NavBar .NavBar-list {
@@ -72,6 +80,7 @@
   cursor: pointer;
   flex-shrink: 0;
 
+  margin: var(--padding-v) 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -99,9 +108,12 @@
 
 @media(max-width: 1050px) {
   .NavBar {
+    --height: 5rem;
     --toggle-width: 4rem;
     font-size: var(--scale-4);
+    opacity: 1;
   }
+
   .NavBar.NavBar--open {
     width: calc(100vw - 1rem);
     height: 100vh;
@@ -129,11 +141,15 @@
   .NavBar.NavBar--open .NavBar-slider--h {
     transform: none;
   }
-  .NavBar.NavBar--closed .NavBar-slider--v {
-    transform: translateY(-101%);
-    height: 100vw;
+  .NavBar .NavBar-slider--v {
+    transform: translateY(-100vh);
+    height: 100vh;
   }
-  .NavBar.NavBar--open .NavBar-slider--h {
+  .NavBar.NavBar--open .NavBar-slider--v {
     transform: translateY(0);
+  }
+
+  .NavToggle {
+    background-color: var(--color-bg);
   }
 }
