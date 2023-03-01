@@ -121,7 +121,8 @@
     opacity: 1;
   }
 
-  .NavBar.NavBar--open {
+  .NavBar.NavBar--open,
+  .NavBar.NavBar--closing {
     width: calc(100vw - 1rem);
     height: 100vh;
     height: -webkit-fill-available;

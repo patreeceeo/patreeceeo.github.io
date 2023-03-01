@@ -83,7 +83,6 @@ const NavBar = (function NavBarInit() {
   }
 
   function handleWindowSize() {
-    console.log("handleSize");
     const oldValue = isWideEnoughToBeOpen;
     isWideEnoughToBeOpen = window.innerWidth > 1050;
     if (oldValue !== isWideEnoughToBeOpen) {
@@ -106,15 +105,17 @@ const NavBar = (function NavBarInit() {
   }
 
   function update() {
-    console.log({isWideEnoughToBeOpen, state})
-    // if ((isWideEnoughToBeOpen && state === "auto") || state === "open") {
     if (state === "open") {
       el.classList.add("NavBar--open");
       el.classList.remove("NavBar--closed");
     }
     if(state === "closed") {
-      el.classList.add("NavBar--closed");
+      el.classList.add("NavBar--closed", "NavBar--closing");
       el.classList.remove("NavBar--open");
+
+      setTimeout(() => {
+        el.classList.remove("NavBar--closing");
+      }, 500)
     }
   }
 
