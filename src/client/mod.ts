@@ -72,9 +72,7 @@ const NavBar = (function NavBarInit() {
       throw new Error("Couldn't find #NavBar in DOM");
     }
 
-    const elToggle = el?.querySelector(".NavToggle");
-
-    elToggle?.addEventListener("click", handleToggle);
+    el.addEventListener("click", handleToggle);
 
     globalThis.addEventListener("resize", handleWindowResize);
     globalThis.addEventListener("scroll", handleScroll);
@@ -118,7 +116,6 @@ const NavBar = (function NavBarInit() {
   const handleScroll = debounce(handleScrollWithoutDebouncing, 200)
 
   function update() {
-    console.log({state})
     if (state === "open" || state === "auto" && isWideEnoughToBeOpen && scrollY === 0) {
       el.classList.add("NavBar--open");
       el.classList.remove("NavBar--closed");
