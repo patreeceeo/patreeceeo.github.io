@@ -33,21 +33,13 @@
 
       :root {
         --spacing-horizontal: min(2em, 5vw);
-        --page-width: calc(50rem - var(--spacing-horizontal) * 2);
-        --page-w-sidebar-width: calc(var(--page-width) - var(--spacing-horizontal));
-        --sidebar-max-width: 20%;
+        --page-width: min(100vw, calc(50rem - var(--spacing-horizontal) * 2));
       }
 
-
       .page {
-        max-width: 100%;
         width: var(--page-width);
         padding: var(--spacing-horizontal);
         margin: 0 auto;
-      }
-
-      .sidebar + .page {
-        max-width: var(--page-w-sidebar-max-width);
       }
 
       .page pre {
@@ -72,10 +64,6 @@
         margin-bottom: 1rem;
       }
 
-      .sidebar {
-        max-width: var(--sidebar-max-width);
-      }
-
     </style>
   </head>
   <body>
@@ -89,12 +77,10 @@
         <li><a href="https://www.opera.com/download" target="_blank">Opera</a></li>
       </ul>
     <![endif]-->
-      <div class="u-flex u-flex-row">
-        <nav class="sidebar"></nav>
-        <main>
-          ${content}
-        </main>
-      </div>
-      <script defer src="/static/client.js"></script>
+    ${nav}
+    <main>
+      ${content}
+    </main>
+    <script defer src="/static/client.js"></script>
   </body>
 </html>

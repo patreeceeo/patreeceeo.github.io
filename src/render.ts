@@ -30,13 +30,17 @@ export async function render() {
   const {Home} = await loadModule("~/pages/Home/mod.ts", importMeta)
   const Posts = await loadModule('~/posts/mod.ts', importMeta)
   const Projects = await loadModule('~/projects/mod.ts', importMeta)
+  const {NavBar} = await loadModule("~/components/NavBar/mod.ts", importMeta)
+
+  const nav = await NavBar()
+  console.log({nav})
 
   const pages = [
-    {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home()})},
-    {filePath: Posts.Deno.post.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post()})},
-    {filePath: Posts.PersistHttp.post.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Persistent HTTP"), content: Posts.PersistHttp.Post()})},
-    {filePath: Projects.NotMario.project.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Not Mario"), content: Projects.NotMario.Page()})},
-    {filePath: Projects.LoopyFruits.project.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Loopy Fruits"), content: Projects.LoopyFruits.Page()})},
+    {filePath: 'index', content: await renderTemplate(documentTemplate, {title: getStandardTitle("home"), content: Home(), nav})},
+    {filePath: Posts.Deno.post.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Deno"), content: Posts.Deno.Post(), nav})},
+    {filePath: Posts.PersistHttp.post.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Persistent HTTP"), content: Posts.PersistHttp.Post(), nav})},
+    {filePath: Projects.NotMario.project.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Not Mario"), content: Projects.NotMario.Page(), nav})},
+    {filePath: Projects.LoopyFruits.project.href, content: await renderTemplate(documentTemplate, {title: getStandardTitle("Loopy Fruits"), content: Projects.LoopyFruits.Page(), nav})},
   ];
 
   for (const target of getStaticTargets()) {

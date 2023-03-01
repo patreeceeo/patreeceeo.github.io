@@ -1,0 +1,78 @@
+
+/** TODO fully qualify */
+.NavBar {
+  --toggle-width: 1.6rem;
+  --toggle-height: calc(var(--toggle-width) * 0.76);
+  opacity: 0.66;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  width: 100%;
+  transform: translateX(var(--toggle-width));
+}
+.NavBar:hover {
+  opacity: 1;
+}
+
+.NavBar-inner {
+  width: calc(var(--page-width) + var(--toggle-width) * 2);
+  padding: 1rem;
+  padding-right: 0;
+  margin: 0 auto;
+  font-size: var(--scale-3);
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+
+.NavBar-list {
+  transition: transform 0.5s, opacity 0.5s;
+  transform-origin: center right;
+  padding: 1rem var(--toggle-width);
+}
+
+.NavBar--closed .NavBar-list {
+  transform: scaleX(0);
+  /* opacity: 0; */
+}
+
+.NavBar-item {
+  display: inline-block;
+  padding-left: 1em;
+}
+
+.NavBar-placeholder {
+  height: 4rem;
+  width: 100%;
+}
+
+.NavToggle {
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+
+.NavToggle-line1,
+.NavToggle-line2,
+.NavToggle-line3 {
+  transition: transform 0.2s;
+  border-top: 0.15rem solid var(--color-text);
+  transform-origin: center right;
+}
+
+.NavBar.NavBar--open .NavToggle .NavToggle-line1 {
+  transform: rotate(-45deg);
+}
+.NavBar.NavBar--open .NavToggle .NavToggle-line2 {
+  transform: scaleX(0);
+}
+.NavBar.NavBar--open .NavToggle .NavToggle-line3 {
+  transform: rotate(45deg);
+}

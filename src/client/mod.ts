@@ -53,3 +53,43 @@ function handleResourceUpdate() {
   window.location.reload();
 }
 
+/* More reason to migrate to Svelte, React... I guess. */
+
+setTimeout(() => {
+  NavBar.mount()
+}, 100)
+
+const NavBar = (function NavBarInit () {
+  let isOpen = window.innerWidth > 800
+  let el: HTMLElement
+  function mount() {
+    el = document.querySelector("#NavBar")!
+
+    if(!el) {
+      throw new Error("Couldn't find #NavBar in DOM")
+    }
+
+    const elToggle = el?.querySelector(".NavToggle")
+
+    elToggle?.addEventListener("click", handleToggle)
+
+    update()
+  }
+
+  function handleToggle() {
+    isOpen = !isOpen
+    update()
+  }
+
+  function update() {
+    if(isOpen) {
+      el.classList.replace("NavBar--closed", "NavBar--open")
+    } else {
+      el.classList.replace("NavBar--open", "NavBar--closed")
+    }
+  }
+
+  return {
+    mount
+  }
+})()
