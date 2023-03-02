@@ -23,16 +23,14 @@ export async function addProjectSourceModifyListener(listener: Listener) {
 
   for await (const event of watcher) {
     if(["create", "modify", "remove"].includes(event.kind)) {
-      if(["create", "modify"].includes(event.kind)) {
-        for(const path of event.paths) {
-          if(await isFilePath(path)) {
-            fileModifiedSincePreviousCall = true
-            await updateContentHash(path)
-          }
+      for(const path of event.paths) {
+        if(await isFilePath(path)) {
+          fileModifiedSincePreviousCall = true
+          await updateContentHash(path)
         }
       }
     }
-    if(fileModifiedSincePreviousCall && Date.now()) {
+    if(fileModifiedSincePreviousCall) {
       debouncedListener(event)
     }
     fileModifiedSincePreviousCall = false
