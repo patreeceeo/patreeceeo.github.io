@@ -12,7 +12,9 @@ export const NavBar = (function NavBarInit() {
       throw new Error("Couldn't find #NavBar in DOM");
     }
 
-    el.addEventListener("click", handleToggle);
+    el.addEventListener("click", handleClick, false);
+
+    el.querySelector('.NavToggle')!.addEventListener("click", handleToggle, false)
 
     globalThis.addEventListener("resize", handleWindowResize);
     globalThis.addEventListener("scroll", handleScroll);
@@ -33,7 +35,8 @@ export const NavBar = (function NavBarInit() {
 
   const handleWindowResize = debounce(handleWindowSize, 200);
 
-  function handleToggle() {
+  function handleToggle(e: Event) {
+    e.stopPropagation()
     state =
       state === "auto"
         ? isWideEnoughToBeOpen && scrollY === 0
@@ -43,6 +46,14 @@ export const NavBar = (function NavBarInit() {
           ? "closed"
           : "open";
     update();
+  }
+
+  function handleClick() {
+    const oldValue = state
+    state = scrollY !== 0 ? "closed" : state
+    if(oldValue !== state) {
+      update()
+    }
   }
 
   function handleScrollWithoutDebouncing () {

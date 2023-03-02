@@ -22,7 +22,7 @@ const linkedIn = {
 export function NavBar() {
   const props: NavBarProps = {
     links: [
-      { html: `<a href="/">home</a>` },
+      { html: `<a href="/#home">home</a>` },
       { html: `<a href="/#blog">blog</a>` },
       { html: `<a href="/#projects">projects</a>` },
       { html: `<a href="/#refs">refs</a>` },
