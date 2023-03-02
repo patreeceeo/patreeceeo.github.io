@@ -50,7 +50,7 @@ export const NavBar = (function NavBarInit() {
 
   function handleClick() {
     const oldValue = state
-    state = scrollY !== 0 ? "closed" : state
+    state = scrollY !== 0 || !isWideEnoughToBeOpen ? "closed" : state
     if(oldValue !== state) {
       update()
     }
