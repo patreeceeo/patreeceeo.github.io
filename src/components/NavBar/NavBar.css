@@ -170,5 +170,6 @@
 
   .NavBar .NavBar-mobileSpacer {
     display: initial;
+    height: var(--toggle-height);
   }
 }
