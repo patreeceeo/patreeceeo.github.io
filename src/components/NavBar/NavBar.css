@@ -128,6 +128,8 @@
   .NavBar.NavBar--open,
   .NavBar.NavBar--closing {
     height: 100vh;
+    height: fill-available;
+    height: -moz-available;
     height: -webkit-fill-available;
   }
   .NavBar .NavBar-inner,
@@ -150,6 +152,8 @@
   .NavBar .NavBar-slider--v {
     transform: translateY(-100vh);
     height: 100vh;
+    height: fill-available;
+    height: -moz-available;
     height: -webkit-fill-available;
   }
   .NavBar.NavBar--open .NavBar-slider--v {
