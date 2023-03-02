@@ -59,10 +59,14 @@ export const NavBar = (function NavBarInit() {
     if (state === "open" || state === "auto" && isWideEnoughToBeOpen && scrollY === 0) {
       el.classList.add("NavBar--open");
       el.classList.remove("NavBar--closed");
+      setTimeout(() => {
+        document.body.classList.add("NavBar-bodyHack--open");
+      }, 500)
     }
     if(state === "closed" || state === "auto" && scrollY > 0) {
       el.classList.add("NavBar--closed", "NavBar--closing");
       el.classList.remove("NavBar--open");
+      document.body.classList.remove("NavBar-bodyHack--open");
 
       setTimeout(() => {
         el.classList.remove("NavBar--closing");

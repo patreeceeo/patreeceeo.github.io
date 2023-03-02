@@ -173,3 +173,7 @@
     height: var(--toggle-height);
   }
 }
+
+.NavBar-bodyHack--open main {
+  opacity: 0;
+}
