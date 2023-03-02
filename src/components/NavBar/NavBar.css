@@ -172,12 +172,13 @@
     display: initial;
     height: var(--toggle-height);
   }
+
+  main {
+    transition: opacity 0.5s;
+  }
+  .NavBar-bodyHack--open main {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
-main {
-  transition: opacity 0.5s;
-}
-.NavBar-bodyHack--open main {
-  opacity: 0;
-  pointer-events: none;
-}
