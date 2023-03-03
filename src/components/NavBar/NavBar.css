@@ -1,4 +1,5 @@
 /* Thanks to https://bholmes.dev/blog/building-a-sexy-mobile-ready-navbar-in-any-web-framework/ for the inspiration. */
+/* TODO simplify - I didn't anticipate how complex this would be and got sloppy */
 .NavBar-placeholder {
   height: 4rem;
   width: 100%;
