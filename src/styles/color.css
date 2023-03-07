@@ -4,6 +4,7 @@
   --color-text: hsl(221, 80%, 20%);
   --color-hi: #fff;
   --color-link: hsl(221, 100%, 50%);
+  --color-bg-code: #fff;
 }
 
 body {
@@ -19,3 +20,8 @@ body {
   background-color: var(--color-bg-dark);
 }
 
+pre,
+.color-bg-code {
+  background-color: var(--color-bg-code);
+
+}

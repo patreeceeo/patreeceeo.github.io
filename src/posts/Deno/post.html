@@ -1,7 +1,7 @@
 ${header}
 <article class="page">
   <aside>last updated
-    <time datetime="2023-02-09">2023, February 9th</time>
+    <time datetime="2023-03-07">2023, March 7</time>
   </aside>
   <h2>What is <a href="https://deno.land/">Deno</a>?</h2>
   <p>Tip: This excellent <a href="https://oscarotero.com/deno/">cheat sheet</a> can give you a sense, at a glance, of what Deno has to offer.</p>
@@ -83,17 +83,17 @@ serve(handleHttp)
   <p>Upon installing Deno, you have several things that are commonly desired in modern JavaScript projects:</p>
 
   <ul>
-    <li>A package manager</li>
+    <li>Dependency management</li>
     <li>The (optional) type safety of TypeScript</li>
-    <li>A script bundler with the ability to watch the entry point for changes</li>
+    <li>A script bundler/watcher</li>
     <li>A linter and formatter</li>
     <li>A test runner</li>
     <li>...and more!</li>
   </ul>
 
-  <h3 id="web_interoperable">Web interoperable</h3>
+  <h3 id="interoperable">Interoperable</h3>
 
-  <p><a href="https://www.rfc-editor.org/">A lot</a> of careful thought by a diverse set of intelligent people has gone into the design of the Web Platform, and as a lot of JavaScript applications have historically been for the Web, it only makes sense that Deno's APIs would <a href="https://deno.land/manual/runtime/web_platform_apis">resemble</a> those of the Web, where it makes sense.</p>
+  <p><a href="https://www.rfc-editor.org/">A lot</a> of careful thought by a diverse set of intelligent people has gone into the design of the Web and the Internet, and as a lot of JavaScript applications have historically been for the Web, it only makes sense that Deno's design would <a href="https://deno.land/manual/runtime/web_platform_apis">mirror the Web, wherever it makes sense</a></p>
 
   <p>Node's APIs, on the otherhand, differ signifantly from those of the Web, leading to significant work for developers needing to port code from Node to the Browser or vise-versa. In fairness, though, these APIs were a lot less developed when Node first appeared, and its rapid adoption meant that its early design choices are now more or less set in stone.</p>
 
@@ -106,10 +106,10 @@ serve(handleHttp)
   <p>In Deno, permissions, such as read access to the filesystem, must be specifically granted. It's an approach they call "secure by default." This is what those flags are for in the <a href="shebang">shebang</a> above.</p>
 
   <p>
-  Also, since so much is <a href="batteries_included">included</a> in Deno itself, the number of packages that need to be installed for any given project are much lower. Every installed package is a potential security <a href="https://arstechnica.com/information-technology/2021/09/npm-package-with-3-million-weekly-downloads-had-a-severe-vulnerability/">risk</a>, as <a href="https://www.cisecurity.org/advisory/a-vulnerability-in-an-npm-package-could-allow-for-remote-code-execution_2021-136">new</a> <a href="https://www.bleepingcomputer.com/news/security/big-sabotage-famous-npm-package-deletes-files-to-protest-ukraine-war/">vulnerabilities</a> are discovered every day. With fewer packages to install, the chances are greatly reduced of a developer installing an insecure package, whether the vulnerabily is currently known or discovered later.
+  Also, since so much is <a href="batteries_included">included</a> in Deno itself, the number of dependencies that need to be installed for any given project are much lower. Every installed dependency is a potential security <a href="https://arstechnica.com/information-technology/2021/09/npm-package-with-3-million-weekly-downloads-had-a-severe-vulnerability/">risk</a>, as <a href="https://www.cisecurity.org/advisory/a-vulnerability-in-an-npm-package-could-allow-for-remote-code-execution_2021-136">new</a> <a href="https://www.bleepingcomputer.com/news/security/big-sabotage-famous-npm-package-deletes-files-to-protest-ukraine-war/">vulnerabilities</a> are discovered every day. With fewer dependencies to install, the chances are greatly reduced of a developer installing an insecure dependency, whether the vulnerabily is currently known or discovered later.
   </p>
 
-  <p>And when packages <i>are</i> needed, its <a href="#stdlib">standard library</a> covers a lot of common cases, and should, in theory, be under more scrutiny and therefore less likely to be insecure</p>
+  <p>And when dependencies <i>are</i> needed, its <a href="#stdlib">standard library</a> covers a lot of common cases, and should, in theory, be under more scrutiny and therefore less likely to be insecure</p>
 
   <h3>Written in Rust</h3>
 
@@ -122,7 +122,7 @@ serve(handleHttp)
   </p>
 
   <p>
-  Using Rust to write high-performance software is all the rage these days, and since Deno is <a href="web_interoperable">Web interoperable</a>, code written in Rust can be loaded via WebAssembly in Deno the same way it would be in the Browser, but it can also be loaded as an <a href="https://github.com/denoland/deno/pull/3372">extension</a>.
+  Using Rust to write high-performance software is all the rage these days, and since Deno is <a href="interoperable">interoperable</a> with the Web, code written in Rust can be loaded via WebAssembly in Deno the same way it would be in the Browser, but it can also be loaded as an <a href="https://github.com/denoland/deno/pull/3372">extension</a>.
   </p>
 
   <h4>Denos all the way down</h4>
@@ -260,25 +260,18 @@ index 80ea582..bd67a5f 100644
 
   For those coming from Node, there's a few things to get used to.
 
-  <h3>Package handling</h3>
-  <p>Package handling is completely different in Deno:</p>
+  <h3>Dependencies</h3>
+  <p>Deno ditches existing package ecosystems like NPM and instead uses the Internet as its dependency system. This is another instance of <a href="#interoperable">its preferrence for existing standards</a>. Deno even seems to ditch the term "package" in favor of more specific terms for the way code is&hellip; uh&hellip; packaged, such as "modules" for ES Modules or "scripts" for everything else.</p>
 
-  <ul>
-    <li>There is no package.json</li>
-    <li>There is no node_modules (but there is a local cache)</li>
-    <li>There is no analog to NPM (packages can be loaded from a variety of sources, including NPM)</li>
-    <li>Packages are typically referenced by URL
-      <ul>
-        <li>Those URLs can be used as import specifiers</li>
-      </ul>
-    </li>
-    <li>But <a href="https://github.com/WICG/import-maps">import maps</a> can be used to provide a project-wide alias for URLs. This is the closest analog to package.json</li>
-    <li>Alternatively, import and re-export packages from a cental module
-      <ul>
-        <li>An advantage with this is having a "deps.js" for runtime dependencies, "dev_deps.js" for development dependencies, etc.</li>
-      </ul>
-    </li>
-  </ul>
+  <p>Using dependencies in Deno works like this:</p>
+  <ol>
+    <li>Find where the dependency is hosted (Official host: <a href="https://deno.land/x">deno.land</a>)</li>
+    <li>Optionally run <pre class="u-inline">deno info [dependency URL]</pre> to cache it right away</li>
+    <li>Optionally add it to the <a href="https://github.com/WICG/import-maps">import map</a></li>
+    <li>Alternatively, import and re-export dependencies from a cental module, e.g. "deps.js" for runtime dependencies, "dev_deps.js" for development dependencies, etc.</li>
+    <li>Start <pre class="u-inline">import</pre>ing it!</li>
+  </ol>
+  <p>Dependencies are cached on first use, so if you skipped the info command, new dependencies will be cached when you run the code</p>
 
   <h3 id="import_specifiers">Import specifiers must have full file paths</h3>
 
