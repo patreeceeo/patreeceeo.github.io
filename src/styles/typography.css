@@ -61,6 +61,6 @@ h2.uppercase {
 }
 
 .font-family-mono {
-  font-family: 'Nerd Font Mono', 'Courier New', Courier, monospace;
+  font-family: 'Nerd Font Mono', 'Courier New', Courier, monospace !important;
 }
 
