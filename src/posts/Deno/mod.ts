@@ -5,7 +5,7 @@ import { Project } from "~/projects/types.ts";
 export const post: Project = {
   href: "/post/deno",
   heading: "Unearthing Deno",
-  subheading: "Notes on a promising new JavaScript runtime",
+  subheading: "Yet another article on the new kid on the JavaScript runtime block",
   previewCaption: "Deno reading deno.news",
   previewAssetUrl: "/static/images/deno_news.png",
   previewType: "img"
