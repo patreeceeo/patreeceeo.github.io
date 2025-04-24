@@ -4,9 +4,6 @@ This is a personal portfolio website built with [Astro](https://astro.build/).
 
 ## Features
 - Uses Astro Content Collections (native in Astro v3+)
-- Portfolio content type: `title`, `image`, `discussion`
-- Example entry in `src/content/portfolio/welcome.md`
-- Displays all portfolio entries on the homepage
 
 ## Getting Started
 
@@ -24,10 +21,9 @@ This is a personal portfolio website built with [Astro](https://astro.build/).
      ---
      title: "Project Title"
      image: "/assets/your-image.png"
-     discussion: "Project discussion or description."
      ---
      
-     More content here (optional).
+     Discussion here (optional).
      ```
 
 ## Project Structure
@@ -40,6 +36,3 @@ This is a personal portfolio website built with [Astro](https://astro.build/).
 - Node.js 18+
 - Astro v3+ (you have v5.7.5)
 
----
-
-If you have questions or want to customize further, just ask!
