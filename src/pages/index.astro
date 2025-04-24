@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getPortfolio } from '../utils/portfolio';
-
+import { Image } from 'astro:assets';
 const portfolio = await getPortfolio();
 ---
 
@@ -11,7 +11,7 @@ const portfolio = await getPortfolio();
     {portfolio.map(item => (
       <li style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
         <h2>{item.data.title}</h2>
-        <img src={item.data.image} alt={item.data.title} style="max-width: 300px; border-radius: 8px;" />
+        <Image src={item.data.image} alt={item.data.title} style="max-width: 300px; border-radius: 8px;" />
         <p>{item.data.discussion}</p>
       </li>
     ))}
