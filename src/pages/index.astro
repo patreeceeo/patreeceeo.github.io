@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getPortfolio } from '../utils/portfolio';
+import { getPortfolioHighlights } from '../utils/portfolio';
 import PortfolioDetail from '../components/PortfolioDetail.astro';
-const portfolio = await getPortfolio();
+const portfolio = await getPortfolioHighlights();
 ---
 
 <Layout portfolio={portfolio}>

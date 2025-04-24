@@ -9,3 +9,10 @@ export async function getPortfolio() {
   });
   return items;
 }
+
+export async function getPortfolioHighlights() {
+  const items = await getPortfolio();
+  return items.filter((item) => {
+    return item.data.sortOrder !== undefined;
+  });
+}

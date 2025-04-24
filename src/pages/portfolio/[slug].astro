@@ -1,16 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getPortfolio } from '../../utils/portfolio';
+import { getPortfolioHighlights } from '../../utils/portfolio';
 import { getAssociativeCollection } from '../../utils/collection';
 import PortfolioDetail from '../../components/PortfolioDetail.astro';
 import { Astro } from 'astro';
 
 const { slug } = Astro.params;
-const portfolio = await getPortfolio();
+const portfolio = await getPortfolioHighlights();
 const item = portfolio.find((entry) => entry.slug === slug);
 
 export async function getStaticPaths() {
-  const arr = await getPortfolio();
+  const arr = await getPortfolioHighlights();
   const associative = await getAssociativeCollection(arr);
   return arr.map((item) => ({
     params: { slug: item.slug },
