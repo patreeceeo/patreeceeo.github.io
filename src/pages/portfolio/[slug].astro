@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getPortfolio } from '../../utils/portfolio';
+import { getAssociativeCollection } from '../../utils/collection';
+import PortfolioDetail from '../../components/PortfolioDetail.astro';
+import { Astro } from 'astro';
+
+const { slug } = Astro.params;
+const portfolio = await getPortfolio();
+const item = portfolio.find((entry) => entry.slug === slug);
+
+export async function getStaticPaths() {
+  const arr = await getPortfolio();
+  const associative = await getAssociativeCollection(arr);
+  return arr.map((item) => ({
+    params: { slug: item.slug },
+    props: associative[item.slug],
+  }));
+}
+---
+
+<Layout portfolio={portfolio}>
+  {item ? (
+    <PortfolioDetail item={item} />
+  ) : (
+    <p>Portfolio item not found.</p>
+  )}
+</Layout>

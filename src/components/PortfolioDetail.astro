@@ -1,0 +1,13 @@
+---
+// Props: item (portfolio entry)
+export interface Props {
+  item: CollectionEntry<Collection<"portfolio">>;
+}
+const { item } = Astro.props;
+import { Image } from 'astro:assets';
+---
+<article style="max-width: 700px; margin: 0 auto;">
+  <h1>{item.data.title}</h1>
+  <Image src={item.data.image} alt={item.data.title} style="max-width: 300px; border-radius: 8px;" />
+  <p>{item.data.discussion}</p>
+</article>

@@ -1,19 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getPortfolio } from '../utils/portfolio';
-import { Image } from 'astro:assets';
+import PortfolioDetail from '../components/PortfolioDetail.astro';
 const portfolio = await getPortfolio();
 ---
 
-<Layout>
-  <h1>My Portfolio</h1>
-  <ul style="list-style: none; padding: 0;">
-    {portfolio.map(item => (
-      <li style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
-        <h2>{item.data.title}</h2>
-        <Image src={item.data.image} alt={item.data.title} style="max-width: 300px; border-radius: 8px;" />
-        <p>{item.data.discussion}</p>
-      </li>
-    ))}
-  </ul>
+<Layout portfolio={portfolio}>
+  {portfolio.length > 0 ? (
+    <PortfolioDetail item={portfolio[0]} />
+  ) : (
+    <p>No portfolio items found.</p>
+  )}
 </Layout>
