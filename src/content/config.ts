@@ -5,7 +5,6 @@ const portfolio = defineCollection({
   schema: ({image}) => z.object({
     title: z.string(),
     image: image(),
-    discussion: z.string(),
   }),
 });
 
