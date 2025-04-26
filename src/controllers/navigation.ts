@@ -8,7 +8,7 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
     const { element } = this;
     setTimeout(() => {
       element.value = this.data.get('value') as string;
-    });
+    }, 10);
   }
 
   navigateToSelection() {
