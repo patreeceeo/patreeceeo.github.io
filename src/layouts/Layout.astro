@@ -35,6 +35,18 @@ const { portfolio, slug } = Astro.props as Props;
   <script>
     import "/src/index.ts";
   </script>
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", function() {
+      // trigger 'astro:page-load' event
+      const event = new CustomEvent("astro:page-load", {
+        detail: {
+          url: window.location.href,
+          title: document.title,
+        },
+      });
+      document.dispatchEvent(event);
+    });
+  </script>
 </body>
 </html>
 

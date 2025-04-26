@@ -6,9 +6,9 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
   };
   connect() {
     const { element } = this;
-    setTimeout(() => {
+    document.addEventListener('astro:page-load', () => {
       element.value = this.data.get('value') as string;
-    }, 10);
+    });
   }
 
   navigateToSelection() {
