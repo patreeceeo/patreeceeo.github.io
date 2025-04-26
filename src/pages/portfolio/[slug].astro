@@ -3,7 +3,6 @@ import Layout from '../../layouts/Layout.astro';
 import { getPortfolioHighlights, getPortfolio } from '../../utils/portfolio';
 import { getAssociativeCollection } from '../../utils/collection';
 import PortfolioDetail from '../../components/PortfolioDetail.astro';
-import { Astro } from 'astro';
 
 const { slug } = Astro.params;
 const portfolio = await getPortfolioHighlights();
@@ -20,7 +19,7 @@ export async function getStaticPaths() {
 }
 ---
 
-<Layout portfolio={portfolio}>
+<Layout portfolio={portfolio} slug={slug}>
   {item ? (
     <PortfolioDetail item={item} />
   ) : (
