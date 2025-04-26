@@ -6,6 +6,7 @@ export interface Props {
   portfolio: Array<CollectionEntry<"portfolio">>;
   slug: string;
 }
+const { portfolio, slug } = Astro.props as Props;
 ---
 <!doctype html>
 <html lang="en">
@@ -19,13 +20,13 @@ export interface Props {
 	<body style="margin: 0; padding: 0;">
   <div style="display: flex; min-height: 100vh;">
     <div class="sidebar-responsive">
-      <Sidebar portfolio={Astro.props.portfolio} />
+      <Sidebar portfolio={portfolio} />
     </div>
     <main style="flex: 1; padding: 2rem;">
-      <select class="select-responsive" data-controller="nav-select" data-action="change->nav-select#navigateToSelection" style="width: 100%; padding: 0.5rem; font-size: 1rem;">
-        {Astro.props.portfolio.map((item) => {
-          const selected = item.slug === Astro.props.slug;
-          return <option value={"/portfolio/" + item.slug} selected={selected}>{item.data.title}</option>
+      <select class="select-responsive" data-controller="nav-select" data-nav-select-value={slug} data-action="change->nav-select#navigateToSelection" style="width: 100%; padding: 0.5rem; font-size: 1rem;">
+        {portfolio.map((item) => {
+          const selected = item.slug === slug;
+          return <option value={item.slug} selected={selected}>{item.data.title}</option>
         })}
       </select>
       <slot />
@@ -34,7 +35,6 @@ export interface Props {
   <script>
     import "/src/index.ts";
   </script>
-  
 </body>
 </html>
 

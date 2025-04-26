@@ -1,13 +1,15 @@
 import { Controller } from '@hotwired/stimulus';
 
 export class NavSelectController extends Controller<HTMLSelectElement> {
+  static values = {
+    value: String,
+  };
   connect() {
     const { element } = this;
-    // element.value = window.location.pathname;
+    element.value = this.data.get('value') as string;
   }
 
   navigateToSelection() {
-    location.href = this.element.value;
+    location.pathname = `/portfolio/${this.element.value}`;
   }
-
 }
