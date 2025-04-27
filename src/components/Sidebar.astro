@@ -7,14 +7,21 @@ export interface Props {
 }
 const { portfolio } = Astro.props;
 ---
-<aside class="Sidebar">
-  <a href="/" class="Sidebar_thumbnail" style={`background-image: url(${image.src});`}>
+<aside class="Sidebar" data-controller="nav-sidebar" data-nav-sidebar-default-thumbnail-src={image.src}>
+  <a href="/" class="Sidebar_thumbnail" data-nav-sidebar-target="thumbnail">
   </a>
   <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
       {portfolio.map(item => (
         <li style="margin-bottom: 0.75rem;">
-          <a href={"/portfolio/" + item.slug} style="color: #333; text-decoration: none; font-weight: 500;">
+          <a
+            href={"/portfolio/" + item.slug}
+            style="color: #333; text-decoration: none; font-weight: 500;"
+            data-action="
+              mouseover->nav-sidebar#setThumbnail
+              mouseout->nav-sidebar#resetThumbnail"
+            data-nav-sidebar-src-param={item.data.image.src}
+          >
             {item.data.title}
           </a>
         </li>
