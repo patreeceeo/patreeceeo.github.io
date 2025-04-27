@@ -29,8 +29,6 @@ const { portfolio, slug } = Astro.props as Props;
         data-nav-select-value={slug}
         data-action="
           change->nav-select#navigateToSelection
-          beforeunload@window->nav-select#clearSelection
-          DOMContentLoaded@document->nav-select#connect
           "
         style="width: 100%; padding: 0.5rem; font-size: 1rem;"
       >
