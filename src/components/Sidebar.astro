@@ -1,7 +1,9 @@
 ---
+import type {CollectionEntry} from 'astro:content';
+
 // Sidebar.astro: Receives a `portfolio` prop (array of entries)
 export interface Props {
-  portfolio: Array<CollectionEntry<Collection<"portfolio">>>;
+  portfolio: Array<CollectionEntry<'portfolio'>>;
 }
 const { portfolio } = Astro.props;
 ---
