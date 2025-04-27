@@ -27,6 +27,7 @@ const { portfolio, slug } = Astro.props as Props;
         class="select-responsive"
         data-controller="nav-select"
         data-nav-select-value={slug}
+        data-nav-select-default-value={portfolio[0].slug}
         data-action="
           change->nav-select#navigateToSelection
           pageshow@window->nav-select#setValue

@@ -9,8 +9,8 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
   }
 
   setValue = () => {
-    const { element } = this;
-    element.value = this.data.get('value') as string;
+    const { element, data } = this;
+    element.value = data.get('value') || data.get('defaultValue') as string
   }
 
   navigateToSelection() {
