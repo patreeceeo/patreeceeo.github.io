@@ -1,15 +1,16 @@
 ---
 import type {CollectionEntry} from 'astro:content';
-
+import image from '../content/portfolio/me-duck.png';
 // Sidebar.astro: Receives a `portfolio` prop (array of entries)
 export interface Props {
   portfolio: Array<CollectionEntry<'portfolio'>>;
 }
 const { portfolio } = Astro.props;
 ---
-<aside style="width: 220px; padding: 2rem 1rem; background: #f6f6fa; height: 100vh; box-sizing: border-box; border-right: 1px solid #eee;">
-  <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">Portfolio Links</h2>
-  <nav>
+<aside class="Sidebar">
+  <a href="/" class="Sidebar_thumbnail" style={`background-image: url(${image.src});`}>
+  </a>
+  <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
       {portfolio.map(item => (
         <li style="margin-bottom: 0.75rem;">
@@ -21,3 +22,25 @@ const { portfolio } = Astro.props;
     </ul>
   </nav>
 </aside>
+<style>
+  .Sidebar {
+    --width: 20rem;
+    width: var(--width);
+    background: #f6f6fa;
+    height: 100vh;
+    padding-top: 2rem;
+    box-sizing: border-box;
+    border-right: 1px solid #eee;
+  }
+  .Sidebar_thumbnail {
+    display: block;
+    width: var(--width);
+    height: var(--width);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .Sidebar_nav {
+    padding: 1rem;
+  }
+</style>
