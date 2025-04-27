@@ -1,11 +1,11 @@
 ---
 // Props: item (portfolio entry)
 export interface Props {
-  item: CollectionEntry<Collection<"portfolio">>;
+  item: CollectionEntry<"portfolio">;
 }
 const { item } = Astro.props;
 import { Image } from 'astro:assets';
-import { render } from 'astro:content';
+import { render, type CollectionEntry } from 'astro:content';
 const { Content } = await render(item); // Renders the content of the event entry
 
 ---
