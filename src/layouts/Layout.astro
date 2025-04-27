@@ -29,7 +29,7 @@ const { portfolio, slug } = Astro.props as Props;
         data-nav-select-value={slug}
         data-action="
           change->nav-select#navigateToSelection
-          DOMContentLoaded@document->nav-select#setValue
+          pageshow@window->nav-select#setValue
           "
         style="width: 100%; padding: 0.5rem; font-size: 1rem;"
       >
@@ -45,8 +45,8 @@ const { portfolio, slug } = Astro.props as Props;
     import "/src/index.ts";
   </script>
   <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      console.log(`Document loaded`);
+    window.addEventListener("pageshow", () => {
+      console.log(`page show`);
     });
   </script>
 </body>
