@@ -1,0 +1,6 @@
+
+/* Prevent images from overflowing, but also preserve their aspect ratio */
+article img {
+  max-width: 100% !important;
+  height: auto !important;
+}

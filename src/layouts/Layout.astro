@@ -17,6 +17,7 @@ const { portfolio, slug } = Astro.props as Props;
     <meta name="generator" content={Astro.generator} />
     <title>Patrick Canfield - Portfolio</title>
     <link rel="stylesheet" href="/src/normalize.css" />
+    <link rel="stylesheet" href="/src/global.css" />
   </head>
 	<body style="margin: 0; padding: 0;">
   <div style="display: flex; min-height: 100vh;">
@@ -56,6 +57,7 @@ const { portfolio, slug } = Astro.props as Props;
     width: 100%;
     height: 100%;
   }
+
   .sidebar-responsive {
     display: block;
   }
@@ -77,4 +79,5 @@ const { portfolio, slug } = Astro.props as Props;
       padding: 1rem !important;
     }
   }
+
 </style>
