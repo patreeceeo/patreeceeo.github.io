@@ -1,8 +1,6 @@
-import { type DataEntryMap } from "astro:content";
-
-export function getAssociativeCollection<Item extends DataEntryMap[keyof DataEntryMap]>(collection: Item[]) {
+export function getAssociativeCollection<Item extends {id: string}>(collection: Item[]) {
   const items = Object.fromEntries(
-    collection.map((item) => [item["id"], item])
+    collection.map((item) => [item.id, item])
   );
 
   return items;

@@ -1,8 +1,8 @@
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 const maxSortOrder = Infinity;
 
-export async function getPortfolio() {
+export async function getPortfolio(): Promise<CollectionEntry<'portfolio'>[]> {
   const items = await getCollection('portfolio');
   items.sort((a, b) => {
     return (a.data.sortOrder ?? maxSortOrder) - (b.data.sortOrder ?? maxSortOrder);

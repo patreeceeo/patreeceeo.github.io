@@ -10,7 +10,7 @@ const item = Astro.props;
 
 export async function getStaticPaths() {
   const arr = await getPortfolio();
-  const associative = await getAssociativeCollection(arr);
+  const associative = getAssociativeCollection(arr);
   const result = arr.map((item) => ({
     params: { slug: item.slug },
     props: associative[item.id],
