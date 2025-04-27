@@ -6,12 +6,17 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
   };
   connect() {
     const { element } = this;
-    document.addEventListener('astro:page-load', () => {
-      element.value = this.data.get('value') as string;
-    });
+    element.value = this.data.get('value') as string;
   }
 
   navigateToSelection() {
     location.pathname = `/portfolio/${this.element.value}`;
+  }
+
+  /**
+  * Doing this before navigation prevents WebKit from trying to preserve the select value across page reloads
+  */
+  clearSelection() {
+    this.element.value = "";
   }
 }

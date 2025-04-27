@@ -23,7 +23,16 @@ const { portfolio, slug } = Astro.props as Props;
       <Sidebar portfolio={portfolio} />
     </div>
     <main style="flex: 1; padding: 2rem;">
-      <select class="select-responsive" data-controller="nav-select" data-nav-select-value={slug} data-action="change->nav-select#navigateToSelection" style="width: 100%; padding: 0.5rem; font-size: 1rem;">
+      <select
+        class="select-responsive"
+        data-controller="nav-select"
+        data-nav-select-value={slug}
+        data-action="
+          change->nav-select#navigateToSelection
+          beforeunload@window->nav-select#clearSelection
+          "
+        style="width: 100%; padding: 0.5rem; font-size: 1rem;"
+      >
         {portfolio.map((item) => {
           const selected = item.slug === slug;
           return <option value={item.slug} selected={selected}>{item.data.title}</option>
@@ -34,18 +43,6 @@ const { portfolio, slug } = Astro.props as Props;
   </div>
   <script>
     import "/src/index.ts";
-  </script>
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", function() {
-      // trigger 'astro:page-load' event
-      const event = new CustomEvent("astro:page-load", {
-        detail: {
-          url: window.location.href,
-          title: document.title,
-        },
-      });
-      document.dispatchEvent(event);
-    });
   </script>
 </body>
 </html>
