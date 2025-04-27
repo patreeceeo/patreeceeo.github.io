@@ -44,6 +44,11 @@ const { portfolio, slug } = Astro.props as Props;
   <script>
     import "/src/index.ts";
   </script>
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log(`Document loaded`);
+    });
+  </script>
 </body>
 </html>
 
