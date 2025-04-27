@@ -6,9 +6,6 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
   };
   connect() {
     this.setValue();
-    // WebKit tries to preserve the select value across page reloads
-    // The only known workaround
-    setTimeout(this.setValue, 200);
   }
 
   setValue = () => {
