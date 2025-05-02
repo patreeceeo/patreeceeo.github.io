@@ -15,8 +15,13 @@ article img {
 @font-face {
   font-family: "SomeTimeLater";
   src:
-    url("/fonts/SomeTimeLater.otf") format("opentype"),;
-  font-weight: normal;
+    url("/fonts/SomeTimeLater.ttf") format("truetype"),
+    url("/fonts/SomeTimeLater.woff2") format("woff2"),
+    url("/fonts/SomeTimeLater.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-00FE;
 }
 
 
@@ -46,7 +51,6 @@ h1, .h1, h2, h3, h4, h5, h6 {
   transform: scaleX(var(--scale-x));
   transform-origin: left;
   width: calc(100%/var(--scale-x));
-  translate: 0 12%;
   display: block;
 }
 
@@ -58,3 +62,4 @@ a {
   color: var(--blue);
   text-decoration: none;
 }
+
