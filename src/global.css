@@ -5,6 +5,13 @@ article img {
   height: auto !important;
 }
 
+:root {
+  --blue: #0070f3;
+  --gray: #333;
+  --light-gray: #f7f7f7;
+  --medium-gray: #ddd;
+}
+
 @font-face {
   font-family: "SomeTimeLater";
   src:
@@ -12,14 +19,25 @@ article img {
   font-weight: normal;
 }
 
-body {
+body, .serif {
   font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif; 
+  color: var(--gray);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, .h1, h2, h3, h4, h5, h6 {
   --scale-x: 1.33;
   font-family: 'SomeTimeLater', sans-serif;
   transform: scaleX(var(--scale-x));
   transform-origin: left;
   width: calc(100%/var(--scale-x));
+  display: block;
+}
+
+.h1 {
+  font-size: 2rem;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
 }

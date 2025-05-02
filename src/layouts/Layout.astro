@@ -22,7 +22,7 @@ const { portfolio, slug } = Astro.props as Props;
 	<body style="margin: 0; padding: 0;">
   <div style="display: flex; min-height: 100vh;">
     <div class="sidebar-responsive">
-      <Sidebar portfolio={portfolio} />
+      <Sidebar portfolio={portfolio} selected={slug}/>
     </div>
     <main style="flex: 1; padding: 2rem;">
       <select

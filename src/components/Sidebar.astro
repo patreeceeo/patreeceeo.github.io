@@ -4,6 +4,7 @@ import image from '../content/portfolio/me-duck.png';
 // Sidebar.astro: Receives a `portfolio` prop (array of entries)
 export interface Props {
   portfolio: Array<CollectionEntry<'portfolio'>>;
+  selected: string;
 }
 const { portfolio } = Astro.props;
 ---
@@ -13,10 +14,10 @@ const { portfolio } = Astro.props;
   <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
       {portfolio.map(item => (
-        <li style="margin-bottom: 0.75rem;">
+        <li class={`Sidebar_item ${item.slug === Astro.props.selected ? 'Sidebar_item--selected' : ''}`}>
           <a
             href={"/portfolio/" + item.slug}
-            style="color: #333; text-decoration: none; font-weight: 500;"
+            class="h1"
             data-action="
               mouseover->nav-sidebar#setThumbnail
               mouseout->nav-sidebar#resetThumbnail"
@@ -33,11 +34,11 @@ const { portfolio } = Astro.props;
   .Sidebar {
     --width: 20rem;
     width: var(--width);
-    background: #f6f6fa;
-    height: 100vh;
+    background: var(--medium-gray);
+    height: 100%;
     padding-top: 2rem;
     box-sizing: border-box;
-    border-right: 1px solid #eee;
+    text-align: center;
   }
   .Sidebar_thumbnail {
     display: block;
@@ -46,8 +47,13 @@ const { portfolio } = Astro.props;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    margin-bottom: 2rem;
   }
-  .Sidebar_nav {
-    padding: 1rem;
+  .Sidebar_item {
+    padding: 1rem 0;
+
+    &:hover, &.Sidebar_item--selected {
+      background: #fff;
+    }
   }
 </style>
