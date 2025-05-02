@@ -35,7 +35,7 @@ body {
   align-items: stretch;
 }
 
-body, .serif {
+body {
   font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif; 
   color: var(--gray);
 }
