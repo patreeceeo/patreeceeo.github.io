@@ -5,7 +5,7 @@ import PortfolioDetail from '../components/PortfolioDetail.astro';
 const portfolio = await getPortfolioHighlights();
 ---
 
-<Layout portfolio={portfolio}>
+<Layout portfolio={portfolio} slug={portfolio[0].slug}>
   {portfolio.length > 0 ? (
     <PortfolioDetail item={portfolio[0]} />
   ) : (
