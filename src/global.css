@@ -4,3 +4,18 @@ article img {
   max-width: 100% !important;
   height: auto !important;
 }
+
+@font-face {
+  font-family: "SomeTimeLater";
+  src:
+    url("/fonts/SomeTimeLater.otf") format("opentype"),;
+  font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  --scale-x: 1.33;
+  font-family: 'SomeTimeLater', sans-serif;
+  transform: scaleX(var(--scale-x));
+  transform-origin: left;
+  width: calc(100%/var(--scale-x));
+}
