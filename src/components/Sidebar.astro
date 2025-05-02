@@ -9,8 +9,10 @@ export interface Props {
 const { portfolio } = Astro.props;
 ---
 <aside class="Sidebar" data-controller="nav-sidebar" data-nav-sidebar-default-thumbnail-src={image.src}>
-  <a href="/" class="Sidebar_thumbnail" data-nav-sidebar-target="thumbnail">
+  <div class="Sidebar_thumbnail-container">
+    <a href="/" class="Sidebar_thumbnail" data-nav-sidebar-target="thumbnail">
   </a>
+  </div>
   <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
       {portfolio.map(item => (
@@ -34,11 +36,13 @@ const { portfolio } = Astro.props;
   .Sidebar {
     --width: 20rem;
     width: var(--width);
-    background: var(--medium-gray);
     height: 100%;
-    padding-top: 2rem;
     box-sizing: border-box;
     text-align: center;
+    background: var(--medium-gray);
+  }
+  .Sidebar_thumbnail-container {
+    background: linear-gradient(to bottom, #fff, var(--medium-gray));
   }
   .Sidebar_thumbnail {
     display: block;
@@ -47,7 +51,7 @@ const { portfolio } = Astro.props;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
   }
   .Sidebar_item {
     padding: 1rem 0;
