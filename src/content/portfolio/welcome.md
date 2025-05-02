@@ -1,7 +1,9 @@
 ---
-title: "Welcome to My Portfolio!"
-image: "./astro.svg"
+title: "Welcome!"
+image: "./me-duck.png"
 sortOrder: 0
 ---
 
-Isn't it great??
+Have a look around, and enjoy your stay!
+
+-- Patrick
