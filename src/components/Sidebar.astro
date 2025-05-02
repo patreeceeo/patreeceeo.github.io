@@ -36,13 +36,15 @@ const { portfolio } = Astro.props;
   .Sidebar {
     --width: 20rem;
     width: var(--width);
-    height: 100%;
     box-sizing: border-box;
+    height: max(100vh, 100%);
     text-align: center;
     background: var(--medium-gray);
+    overflow: hidden;
   }
   .Sidebar_thumbnail-container {
     background: linear-gradient(to bottom, #fff, var(--medium-gray));
+    padding: 2rem 0;
   }
   .Sidebar_thumbnail {
     display: block;
@@ -51,7 +53,6 @@ const { portfolio } = Astro.props;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    margin: 2rem 0;
   }
   .Sidebar_item {
     a {

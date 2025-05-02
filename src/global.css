@@ -19,6 +19,22 @@ article img {
   font-weight: normal;
 }
 
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  height: fit-content;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
 body, .serif {
   font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif; 
   color: var(--gray);
@@ -29,8 +45,8 @@ h1, .h1, h2, h3, h4, h5, h6 {
   font-family: 'SomeTimeLater', sans-serif;
   transform: scaleX(var(--scale-x));
   transform-origin: left;
-  translate: 0 12%;
   width: calc(100%/var(--scale-x));
+  translate: 0 12%;
   display: block;
 }
 
