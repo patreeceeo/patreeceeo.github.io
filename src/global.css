@@ -12,6 +12,10 @@ article img {
   font-weight: normal;
 }
 
+body {
+  font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif; 
+}
+
 h1, h2, h3, h4, h5, h6 {
   --scale-x: 1.33;
   font-family: 'SomeTimeLater', sans-serif;
