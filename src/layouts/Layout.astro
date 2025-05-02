@@ -2,6 +2,9 @@
 import type {CollectionEntry} from 'astro:content';
 import Sidebar from '../components/Sidebar.astro';
 import icon from "../content/portfolio/me-duck-square.png";
+import '../normalize.css';
+import '../global.css';
+
 export interface Props {
   portfolio: Array<CollectionEntry<"portfolio">>;
   slug: string;
@@ -16,8 +19,6 @@ const { portfolio, slug } = Astro.props as Props;
     <link rel="icon" type="image/svg+xml" href={icon.src} />
     <meta name="generator" content={Astro.generator} />
     <title>Patrick Canfield - Portfolio</title>
-    <link rel="stylesheet" href="/src/normalize.css" />
-    <link rel="stylesheet" href="/src/global.css" />
   </head>
 	<body style="margin: 0; padding: 0;">
   <div style="display: flex; min-height: 100vh;">
