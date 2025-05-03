@@ -34,13 +34,16 @@ const { portfolio } = Astro.props;
 </aside>
 <style>
   .Sidebar {
-    --width: 20rem;
+    --width: 20vw;
     width: var(--width);
     box-sizing: border-box;
     height: max(100vh, 100%);
     text-align: center;
     background: var(--medium-gray);
     overflow: hidden;
+
+    /* Ensure the main content is centered in the viewport */
+    margin-right: calc(var(--width) / -2);
   }
   .Sidebar_thumbnail-container {
     background: linear-gradient(to bottom, #fff, var(--medium-gray));
