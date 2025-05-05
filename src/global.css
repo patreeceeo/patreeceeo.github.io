@@ -16,15 +16,14 @@ article img {
 }
 
 @font-face {
-  font-family: "SomeTimeLater";
+  font-family: "Peralta";
   src:
-    url("/fonts/SomeTimeLater.ttf") format("truetype"),
-    url("/fonts/SomeTimeLater.woff2") format("woff2"),
-    url("/fonts/SomeTimeLater.woff") format("woff");
+    url("/fonts/Peralta-Regular.ttf") format("truetype"),
+    url("/fonts/Peralta-Regular.woff2") format("woff2"),
+    url("/fonts/Peralta-Regular.woff") format("woff");
     font-weight: 400;
     font-style: normal;
     font-stretch: normal;
-    unicode-range: U+0020-00FE;
 }
 
 
@@ -49,7 +48,7 @@ body {
 }
 
 h1, .h1, h2, h3, h4, h5, h6 {
-  font-family: 'SomeTimeLater', sans-serif;
+  font-family: 'Peralta', sans-serif;
   display: block;
 }
 
