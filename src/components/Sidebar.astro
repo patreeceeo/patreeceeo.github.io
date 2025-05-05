@@ -44,6 +44,10 @@ const { portfolio } = Astro.props;
 
     /* Ensure the main content is centered in the viewport */
     margin-right: calc(var(--width) / -2);
+
+    /* Ensure it's always on top */
+    position: relative;
+    z-index: 999;
   }
   .Sidebar_thumbnail-container {
     background: linear-gradient(to bottom, #fff, var(--medium-gray));
