@@ -19,6 +19,9 @@ const { portfolio, slug } = Astro.props as Props;
     <link rel="icon" type="image/svg+xml" href={icon.src} />
     <meta name="generator" content={Astro.generator} />
     <title>Patrick Canfield - Portfolio</title>
+    <link rel="preload" href="/fonts/Peralta-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/Peralta-Regular.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="/fonts/Peralta-Regular.woff2" as="font" type="font/woff2" crossorigin>
   </head>
 	<body>
     <div class="sidebar-responsive">
