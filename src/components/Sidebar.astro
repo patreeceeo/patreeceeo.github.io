@@ -11,9 +11,9 @@ const { portfolio } = Astro.props;
 const width = "20vw";
 
 ---
-<aside class="Sidebar" data-controller="nav-sidebar" data-nav-sidebar-default-thumbnail-src={image.src}>
+<aside class="Sidebar" data-controller="nav-sidebar">
   <div class="Sidebar_thumbnail-container">
-    <ImageLink href="/" width={width} height={width} data-nav-sidebar-target="thumbnail"/>
+    <ImageLink href="/" width={width} height={width} imageCssUrl={`url(${image.src})`} data-nav-sidebar-target="thumbnail"/>
   </div>
   <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
