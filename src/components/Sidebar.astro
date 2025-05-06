@@ -1,6 +1,7 @@
 ---
 import type {CollectionEntry} from 'astro:content';
 import image from '../content/portfolio/me-duck.png';
+import ImageLink from './ImageLink.astro';
 // Sidebar.astro: Receives a `portfolio` prop (array of entries)
 export interface Props {
   portfolio: Array<CollectionEntry<'portfolio'>>;
@@ -10,8 +11,7 @@ const { portfolio } = Astro.props;
 ---
 <aside class="Sidebar" data-controller="nav-sidebar" data-nav-sidebar-default-thumbnail-src={image.src}>
   <div class="Sidebar_thumbnail-container">
-    <a href="/" class="Sidebar_thumbnail" data-nav-sidebar-target="thumbnail">
-  </a>
+    <ImageLink href="/" data-nav-sidebar-target="thumbnail"/>
   </div>
   <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
@@ -52,14 +52,6 @@ const { portfolio } = Astro.props;
   .Sidebar_thumbnail-container {
     background: linear-gradient(to bottom, #fff, var(--medium-gray));
     padding: 2rem 0;
-  }
-  .Sidebar_thumbnail {
-    display: block;
-    width: var(--width);
-    height: var(--width);
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
   }
   .Sidebar_item {
     a {
