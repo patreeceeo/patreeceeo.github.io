@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar.astro';
 import icon from "../content/portfolio/me-duck-square.png";
 import '../normalize.css';
 import '../global.css';
+import NavSelect from '../components/NavSelect.astro';
 
 export interface Props {
   portfolio: Array<CollectionEntry<"portfolio">>;
@@ -28,22 +29,9 @@ const { portfolio, slug } = Astro.props as Props;
       <Sidebar portfolio={portfolio} selected={slug}/>
     </div>
     <main style="flex: 1; padding: 2rem;">
-      <select
-        class="select-responsive"
-        data-controller="nav-select"
-        data-nav-select-value={slug}
-        data-nav-select-default-value={portfolio[0].slug}
-        data-action="
-          change->nav-select#navigateToSelection
-          pageshow@window->nav-select#setValue
-          "
-        style="width: 100%; padding: 0.5rem; font-size: 1rem;"
-      >
-        {portfolio.map((item) => {
-          const selected = item.slug === slug;
-          return <option value={item.slug} selected={selected}>{item.data.title}</option>
-        })}
-      </select>
+      <div class="select-responsive">
+        <NavSelect portfolio={portfolio} slug={slug} />
+      </div>
       <slot />
     </main>
   <script>
@@ -58,10 +46,6 @@ const { portfolio, slug } = Astro.props as Props;
   }
   .select-responsive {
     display: none;
-    width: 100%;
-    background: #f6f6fa;
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
   }
   @media (max-width: 800px) {
     .sidebar-responsive {

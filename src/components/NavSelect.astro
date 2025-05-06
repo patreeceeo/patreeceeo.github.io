@@ -1,0 +1,33 @@
+---
+import type {CollectionEntry} from 'astro:content';
+
+export interface Props {
+  portfolio: Array<CollectionEntry<"portfolio">>;
+  slug: string;
+}
+
+const { portfolio, slug } = Astro.props as Props;
+---
+<select
+  class="NavSelect"
+  data-controller="nav-select"
+  data-nav-select-value={slug}
+  data-nav-select-default-value={portfolio[0].slug}
+  data-action="
+    change->nav-select#navigateToSelection
+    pageshow@window->nav-select#setValue
+    "
+>
+  {portfolio.map((item) => {
+    const selected = item.slug === slug;
+    return <option value={item.slug} selected={selected}>{item.data.title}</option>
+  })}
+</select>
+<style>
+  .NavSelect {
+    width: 100%;
+    background: var(--medium-gray);
+    padding: 1rem;
+    font-size: 1rem;
+  }
+</style>
