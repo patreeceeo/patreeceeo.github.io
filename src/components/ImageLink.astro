@@ -2,17 +2,19 @@
 ---
 export interface Props {
   href: string;
+  width: string;
+  height: string;
   [key: string]: any;
 }
-const { href, ...props } = Astro.props as Props;
+const { href, width, height, ...props } = Astro.props as Props;
 ---
 <a href={href} class="ImageLink" {...props}></a>
 
-<style>
+<style define:vars={{width, height}}>
   .ImageLink {
     display: block;
     width: var(--width);
-    height: var(--width);
+    height: var(--height);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

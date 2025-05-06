@@ -8,10 +8,12 @@ export interface Props {
   selected: string;
 }
 const { portfolio } = Astro.props;
+const width = "20vw";
+
 ---
 <aside class="Sidebar" data-controller="nav-sidebar" data-nav-sidebar-default-thumbnail-src={image.src}>
   <div class="Sidebar_thumbnail-container">
-    <ImageLink href="/" data-nav-sidebar-target="thumbnail"/>
+    <ImageLink href="/" width={width} height={width} data-nav-sidebar-target="thumbnail"/>
   </div>
   <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
@@ -32,10 +34,8 @@ const { portfolio } = Astro.props;
     </ul>
   </nav>
 </aside>
-<style>
+<style define:vars={{width}}>
   .Sidebar {
-    --width: 20vw;
-    width: var(--width);
     box-sizing: border-box;
     height: max(100vh, 100%);
     text-align: center;
