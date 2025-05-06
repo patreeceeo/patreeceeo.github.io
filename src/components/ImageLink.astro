@@ -8,9 +8,20 @@ export interface Props {
   [key: string]: any;
 }
 const { href, width, height, imageCssUrl, ...props } = Astro.props as Props;
+const uuid = new Date().getTime().toString(16) + Math.random().toString(16).slice(2);
 ---
-<a href={href} class="ImageLink" {...props}></a>
+<a href={href} class="ImageLink" {...props} id={uuid}></a>
 
+<script define:vars={{width, height, uuid}}>
+  document.addEventListener("DOMContentLoaded", () => {
+    // select the element
+    const element = document.getElementById(uuid);
+    if(width === "height") {
+      const width = element.offsetHeight + "px";
+      element.style.setProperty('--width', width);
+    }
+  });
+</script>
 <style define:vars={{width, height, imageCssUrl}}>
   .ImageLink {
     display: block;

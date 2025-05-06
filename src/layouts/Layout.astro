@@ -5,6 +5,7 @@ import icon from "../content/portfolio/me-duck-square.png";
 import '../normalize.css';
 import '../global.css';
 import NavSelect from '../components/NavSelect.astro';
+import ImageLink from '../components/ImageLink.astro';
 
 export interface Props {
   portfolio: Array<CollectionEntry<"portfolio">>;
@@ -30,6 +31,7 @@ const { portfolio, slug } = Astro.props as Props;
     </div>
     <main style="flex: 1; padding: 2rem;">
       <div class="select-responsive">
+        <ImageLink href="/" imageCssUrl={`url(${portfolio[0].data.image.src})`} height="auto" width="height"/>
         <NavSelect portfolio={portfolio} slug={slug} />
       </div>
       <slot />
@@ -52,7 +54,8 @@ const { portfolio, slug } = Astro.props as Props;
       display: none;
     }
     .select-responsive {
-      display: block;
+      display: flex;
+      flex-direction: row;
     }
     main {
       padding: 1rem !important;
