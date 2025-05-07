@@ -4,6 +4,12 @@ image: "./me-duck.png"
 sortOrder: 0
 ---
 
-Have a look around, and enjoy your stay!
+Hi, I'm Patrick. I make things.
 
--- Patrick
+- 2D & 3D art
+- Games & Experiences
+- Software & Websites
+
+I'm interested how imagination can be put in the service of universal human flourishing and elimination of want and fear.
+
+
