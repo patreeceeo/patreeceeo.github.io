@@ -8,27 +8,52 @@ export interface Props {
 
 const { portfolio, slug } = Astro.props as Props;
 ---
-<select
-  class="NavSelect"
-  data-controller="nav-select"
-  data-nav-select-value={slug}
-  data-nav-select-default-value={portfolio[0].slug}
-  data-action="
-    change->nav-select#navigateToSelection
-    pageshow@window->nav-select#setValue
-    "
->
-  {portfolio.map((item) => {
-    const selected = item.slug === slug;
-    return <option value={item.slug} selected={selected}>{item.data.title}</option>
-  })}
-</select>
+<div class="NavSelect">
+  <select
+    class="NavSelect_select"
+    data-controller="nav-select"
+    data-nav-select-value={slug}
+    data-nav-select-default-value={portfolio[0].slug}
+    data-action="
+      change->nav-select#navigateToSelection
+      pageshow@window->nav-select#setValue
+      "
+  >
+    {portfolio.map((item) => {
+      const selected = item.slug === slug;
+      return <option value={item.slug} selected={selected}>{item.data.title}</option>
+    })}
+  </select>
+</div>
 <style>
   .NavSelect {
+    position: relative;
+    display: flex;
     flex: 1;
-    background: var(--medium-gray);
-    padding: 1rem;
+    user-select: none;
     font-size: 2rem;
+    border-radius: 0.25rem;
+    background-color: var(--medium-gray);
+
+
+    &::after {
+      content: "▼";
+      top: 50%;
+      transform: translateY(-50%);
+      right: 1rem;
+      position: absolute;
+      pointer-events: none;
+    }
+  }
+
+  .NavSelect_select {
+    flex: 1;
+    background: transparent;
+    color: inherit;
+    padding: 1rem;
     font-family: var(--font-peralta);
+
+    appearance: none;
+    border: none;
   }
 </style>

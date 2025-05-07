@@ -18,6 +18,11 @@ article img {
   --font-peralta: 'Peralta', var(--font-serif);
 }
 
+::selection {
+  background: var(--blue);
+  color: white;
+}
+
 @font-face {
   font-family: "Peralta";
   src:
