@@ -43,6 +43,10 @@ const { portfolio, slug } = Astro.props as Props;
 </html>
 
 <style>
+  main {
+    flex: 1;
+    padding: 2rem;
+  }
   .sidebar-responsive {
     display: block;
   }
@@ -50,15 +54,15 @@ const { portfolio, slug } = Astro.props as Props;
     display: none;
   }
   @media (max-width: 800px) {
+    main {
+      padding: 1rem;
+    }
     .sidebar-responsive {
       display: none;
     }
     .select-responsive {
       display: flex;
       flex-direction: row;
-    }
-    main {
-      padding: 1rem !important;
     }
   }
 
