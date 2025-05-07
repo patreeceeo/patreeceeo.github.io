@@ -13,6 +13,9 @@ article img {
   --gray: #333;
   --light-gray: #f7f7f7;
   --medium-gray: #ddd;
+
+  --font-serif: 'Charter', 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+  --font-peralta: 'Peralta', var(--font-serif);
 }
 
 @font-face {
@@ -43,12 +46,12 @@ body {
 }
 
 body {
-  font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif; 
+  font-family: var(--font-serif);
   color: var(--gray);
 }
 
 h1, .h1, h2, h3, h4, h5, h6 {
-  font-family: 'Peralta', sans-serif;
+  font-family: var(--font-peralta);
   display: block;
 }
 
