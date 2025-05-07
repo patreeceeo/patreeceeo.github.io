@@ -21,7 +21,7 @@ const width = "20vw";
         <li class={`Sidebar_item ${item.slug === Astro.props.selected ? 'Sidebar_item--selected' : ''}`}>
           <a
             href={"/portfolio/" + item.slug}
-            class="h1"
+            class="h1 noTextWrap"
             data-action="
               mouseover->nav-sidebar#setThumbnail
               mouseout->nav-sidebar#resetThumbnail"
@@ -36,6 +36,7 @@ const width = "20vw";
 </aside>
 <style define:vars={{width}}>
   .Sidebar {
+    width: var(--width);
     box-sizing: border-box;
     height: max(100vh, 100%);
     text-align: center;

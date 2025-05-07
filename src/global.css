@@ -60,6 +60,13 @@ h1, .h1, h2, h3, h4, h5, h6 {
   display: block;
 }
 
+.noTextWrap {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
 .h1 {
   font-size: 2rem;
 }
