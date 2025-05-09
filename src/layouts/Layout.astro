@@ -29,11 +29,11 @@ const { portfolio, slug } = Astro.props as Props;
     <div class="sidebar-responsive">
       <Sidebar portfolio={portfolio} selected={slug}/>
     </div>
-    <main style="flex: 1; padding: 2rem;">
-      <div class="select-responsive">
-        <ImageLink href="/" imageCssUrl={`url(${portfolio[0].data.image.src})`} height="auto" width="height"/>
-        <NavSelect portfolio={portfolio} slug={slug} />
-      </div>
+    <div class="select-responsive">
+      <ImageLink href="/" imageCssUrl={`url(${portfolio[0].data.image.src})`} height="auto" width="height"/>
+      <NavSelect portfolio={portfolio} slug={slug} />
+    </div>
+    <main>
       <slot />
     </main>
   <script>
@@ -49,9 +49,19 @@ const { portfolio, slug } = Astro.props as Props;
   }
   .sidebar-responsive {
     display: block;
+    position: fixed;
+    /* Ensure it's always on top */
+    z-index: 999;
+    height: 100vh;
   }
   .select-responsive {
     display: none;
+    flex-direction: row;
+    position: fixed;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.75);
   }
   @media (max-width: 800px) {
     main {
@@ -62,7 +72,6 @@ const { portfolio, slug } = Astro.props as Props;
     }
     .select-responsive {
       display: flex;
-      flex-direction: row;
     }
   }
 

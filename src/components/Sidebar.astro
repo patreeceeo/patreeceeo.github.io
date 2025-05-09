@@ -11,21 +11,21 @@ const { portfolio } = Astro.props;
 const width = "20vw";
 
 ---
-<aside class="Sidebar" data-controller="nav-sidebar">
+<aside class="Sidebar" data-controller="nav-sidebar thumbnail" data-nav-sidebar-slugs={portfolio.map(item => item.slug).join(",")}>
   <div class="Sidebar_thumbnail-container">
-    <ImageLink href="/" width={width} height={width} imageCssUrl={`url(${image.src})`} data-nav-sidebar-target="thumbnail"/>
+    <ImageLink href="/" width={width} height={width} imageCssUrl={`url(${image.src})`} data-thumbnail-target="thumbnail"/>
   </div>
   <nav class="Sidebar_nav">
     <ul style="list-style: none; padding: 0; margin: 0;">
       {portfolio.map(item => (
-        <li class={`Sidebar_item ${item.slug === Astro.props.selected ? 'Sidebar_item--selected' : ''}`}>
+        <li class="Sidebar_item" data-nav-sidebar-target={item.slug}>
           <a
-            href={"/portfolio/" + item.slug}
+            href={"#" + item.slug}
             class="h1 noTextWrap"
             data-action="
-              mouseover->nav-sidebar#setThumbnail
-              mouseout->nav-sidebar#resetThumbnail"
-            data-nav-sidebar-src-param={item.data.image.src}
+              mouseover->thumbnail#set
+              mouseout->thumbnail#reset"
+            data-thumbnail-src-param={item.data.image.src}
           >
             {item.data.title}
           </a>
@@ -38,17 +38,13 @@ const width = "20vw";
   .Sidebar {
     width: var(--width);
     box-sizing: border-box;
-    height: max(100vh, 100%);
+    height: 100%;
     text-align: center;
     background: var(--medium-gray);
     overflow: hidden;
 
     /* Ensure the main content is centered in the viewport */
     margin-right: calc(var(--width) * -1);
-
-    /* Ensure it's always on top */
-    position: relative;
-    z-index: 999;
   }
   .Sidebar_thumbnail-container {
     background: linear-gradient(to bottom, #fff, var(--medium-gray));

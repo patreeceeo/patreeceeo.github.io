@@ -14,6 +14,7 @@ const { portfolio, slug } = Astro.props as Props;
     data-controller="nav-select"
     data-nav-select-value={slug}
     data-nav-select-default-value={portfolio[0].slug}
+    data-nav-select-slugs={portfolio.map(item => item.slug).join(",")}
     data-action="
       change->nav-select#navigateToSelection
       pageshow@window->nav-select#setValue
