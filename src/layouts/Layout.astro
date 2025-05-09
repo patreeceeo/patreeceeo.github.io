@@ -25,7 +25,7 @@ const { portfolio, slug } = Astro.props as Props;
     <link rel="preload" href="/fonts/Peralta-Regular.woff" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="/fonts/Peralta-Regular.woff2" as="font" type="font/woff2" crossorigin>
   </head>
-	<body>
+  <body data-controller="layout">
     <div class="sidebar-responsive">
       <Sidebar portfolio={portfolio} selected={slug}/>
     </div>
@@ -43,36 +43,43 @@ const { portfolio, slug } = Astro.props as Props;
 </html>
 
 <style>
+  :root {
+    --main-padding: 2rem;
+    --sidebar-display: block;
+    --select-display: none;
+  }
+  @media (max-width: 800px) {
+    :root {
+      --main-padding: 1rem;
+      --sidebar-display: none;
+      --select-display: flex;
+    }
+  }
+  .is-mobile {
+    --main-padding: 1rem;
+    --sidebar-display: none;
+    --select-display: flex;
+  }
+
   main {
     flex: 1;
-    padding: 2rem;
+    padding: var(--main-padding);
   }
   .sidebar-responsive {
-    display: block;
+    display: var(--sidebar-display);
     position: fixed;
     /* Ensure it's always on top */
     z-index: 999;
     height: 100vh;
   }
   .select-responsive {
-    display: none;
+    display: var(--select-display);
     flex-direction: row;
     position: fixed;
     width: 100%;
     padding: 1rem;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.75);
-  }
-  @media (max-width: 800px) {
-    main {
-      padding: 1rem;
-    }
-    .sidebar-responsive {
-      display: none;
-    }
-    .select-responsive {
-      display: flex;
-    }
   }
 
 </style>

@@ -9,14 +9,14 @@ export interface Props {
 }
 const { portfolio } = Astro.props;
 const width = "20vw";
-
+// TODO overflow Y scroll
 ---
 <aside class="Sidebar" data-controller="nav-sidebar thumbnail" data-nav-sidebar-slugs={portfolio.map(item => item.slug).join(",")}>
   <div class="Sidebar_thumbnail-container">
     <ImageLink href="/" width={width} height={width} imageCssUrl={`url(${image.src})`} data-thumbnail-target="thumbnail"/>
   </div>
   <nav class="Sidebar_nav">
-    <ul style="list-style: none; padding: 0; margin: 0;">
+    <ul class="Sidebar_list" data-layout-target="sidebarList">
       {portfolio.map(item => (
         <li class="Sidebar_item" data-nav-sidebar-target={item.slug}>
           <a
@@ -49,6 +49,11 @@ const width = "20vw";
   .Sidebar_thumbnail-container {
     background: linear-gradient(to bottom, #fff, var(--medium-gray));
     padding: 2rem 0;
+  }
+  .Sidebar_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
   .Sidebar_item {
     a {
