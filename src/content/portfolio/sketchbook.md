@@ -1,7 +1,7 @@
 ---
 title: "Sketchbook"
 image: "./portrait.jpg"
-sortOrder: 5
+sortOrder: 6
 ---
 Some portraits from my sketchbook.
 ![A portrait](./portrait.jpg)
