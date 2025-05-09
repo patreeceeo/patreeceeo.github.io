@@ -68,12 +68,16 @@ export class NavSidebarController extends Controller<HTMLElement> {
 
 function decideSelectedSlug(slugs: string[]): string | undefined {
   const viewportHeight = window.innerHeight;
+  const halfViewportHeight = viewportHeight >> 1;
+  const slugCount = slugs.length;
   const selectedSlug = slugs.find((slug) => {
     const element = document.getElementById(slug);
     if (element) {
       const { top, bottom } = element.getBoundingClientRect();
+      const slugIndex = slugs.indexOf(slug);
+      const bottomThreshold = halfViewportHeight * (slugIndex / slugCount);
         // Return true if any part of the element is in the viewport
-      return top < viewportHeight && bottom > 0;
+      return top < viewportHeight && bottom > bottomThreshold
     }
     return false;
   });

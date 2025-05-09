@@ -12,7 +12,6 @@ const portfolio = await getPortfolioHighlights();
       <PortfolioDetail item={item} />
     </article>
   ))}
-<div class="Spacer">&nbsp;</div>
 </Layout>
 <style>
   .Spacer {
@@ -21,8 +20,7 @@ const portfolio = await getPortfolioHighlights();
   article {
     width: 40vw;
     max-width: 800px;
-    margin: 0 auto;
-    padding-top: 6rem;
+    margin: 20vh auto;
   }
   @media (max-width: 800px) {
     article {
