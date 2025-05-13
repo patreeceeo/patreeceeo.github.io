@@ -49,7 +49,6 @@ export class NavSidebarController extends Controller<HTMLElement> {
   disconnect(): void {
     // Clean up the event listener when the controller is disconnected
     window.removeEventListener('scroll', this.onScroll);
-    window.removeEventListener('resize', this.onResize);
   }
 
   onScroll = () => {
