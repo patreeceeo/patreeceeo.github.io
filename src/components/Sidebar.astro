@@ -13,7 +13,7 @@ const width = "20vw";
 ---
 <aside class="Sidebar" data-controller="nav-sidebar thumbnail" data-nav-sidebar-slugs={portfolio.map(item => item.slug).join(",")}>
   <div class="Sidebar_thumbnail-container">
-    <ImageLink href="/" width={width} height={width} imageCssUrl={`url(${image.src})`} data-thumbnail-target="thumbnail"/>
+    <ImageLink href="/" width="auto" height="100%" imageCssUrl={`url(${image.src})`} data-thumbnail-target="thumbnail"/>
   </div>
   <nav class="Sidebar_nav">
     <ul class="Sidebar_list">
@@ -43,12 +43,23 @@ const width = "20vw";
     background: var(--medium-gray);
     overflow: hidden;
 
+    display: flex;
+    flex-direction: column;
+
     /* Ensure the main content is centered in the viewport */
     margin-right: calc(var(--width) * -1);
   }
   .Sidebar_thumbnail-container {
     background: linear-gradient(to bottom, #fff, var(--medium-gray));
-    padding: 2rem 0;
+    padding: 2vh 2vw;
+
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+  .Sidebar_nav {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
   }
   .Sidebar_list {
     list-style: none;
