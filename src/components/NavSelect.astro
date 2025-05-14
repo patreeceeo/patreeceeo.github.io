@@ -9,11 +9,7 @@ export interface Props {
 const { portfolio, slug } = Astro.props as Props;
 ---
 <div class="NavSelect">
-  <label class="NavSelect_label" for="nav-select">
-    Select a project
-  </label>
   <select
-    id="nav-select"
     class="NavSelect_select"
     data-controller="nav-select"
     data-nav-select-value={slug}
@@ -23,6 +19,7 @@ const { portfolio, slug } = Astro.props as Props;
       change->nav-select#navigateToSelection
       pageshow@window->nav-select#setValue
       "
+    aria-label="Portfolio Navigation"
   >
     {portfolio.map((item) => {
       const selected = item.slug === slug;
@@ -59,9 +56,5 @@ const { portfolio, slug } = Astro.props as Props;
 
     appearance: none;
     border: none;
-  }
-
-  .NavSelect_label {
-    display: none;
   }
 </style>
