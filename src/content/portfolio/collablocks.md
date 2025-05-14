@@ -1,10 +1,10 @@
 ---
 title: "Collablocks"
-image: "./collabshow-blocks.jpg"
+image: "./collabshow-blocks.webp"
 sortOrder: 2
 ---
 
-![Colorful blocks with words written on each side](./collabshow-blocks.jpg)
+![Colorful blocks with words written on each side](./collabshow-blocks.webp)
 
 It's like those refrigerator magnets with words written on them, but 3D! And gravity, instead of magnetism...
 

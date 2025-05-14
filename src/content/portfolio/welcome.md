@@ -1,6 +1,6 @@
 ---
 title: "Welcome!"
-image: "./me-duck.png"
+image: "./me-duck.webp"
 sortOrder: 0
 ---
 

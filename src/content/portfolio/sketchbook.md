@@ -11,7 +11,7 @@ Some portraits from my sketchbook.
 It's going to get weird now.
 ![Molar Mobile, a classic car with teeth](./molar-mobile.jpg)
 
-![Me as a duck](./me-duck.png)
+![Me as a duck](./me-duck.webp)
 
 ![a barn fighting a pb & j sandwhich, of course](./smoosh.jpg)
 
