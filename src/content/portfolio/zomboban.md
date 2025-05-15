@@ -20,7 +20,7 @@ Though the gameplay is 2D, I've implemented it in 3D because I have aspirations 
 
 At the core is a reactive state manager/ECS that I (unfortunately) wrote from scratch. I didn't think it would get so complicated! It does integrate nicely with the editor backend, though.
 
-More justifiably, I also devised a non-blocking spatially-addressed message passing system to allow entities (e.g. the player and a block) to communicate with each other without being tightly coupled. This is a bit of a departure from the ECS pattern, but I think it works well for this game.
+More justifiably, I also devised a non-blocking spatially-addressed message passing system to allow entities (e.g. the player and a block) to communicate with each other without being tightly coupled.
 
 </details>
 
