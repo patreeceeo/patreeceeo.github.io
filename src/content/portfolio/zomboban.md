@@ -12,6 +12,8 @@ A game inspired by Chip's Challenge. You control a character that can push block
 
 (_Still in development as of April 2025_)
 
+Now with touch screen controls!
+
 <details>
 <summary>Techno-babble</summary>
 Written in TypeScript using THREE.js for rendering, Blender for 3D assets. A simple Node.js Express backend facilitates the level editor.
