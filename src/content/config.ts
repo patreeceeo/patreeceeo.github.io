@@ -9,4 +9,11 @@ const portfolio = defineCollection({
   }),
 });
 
-export const collections = { portfolio };
+const blog = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    pubDate: z.date(),
+  }),
+});
+
+export const collections = { portfolio, blog };

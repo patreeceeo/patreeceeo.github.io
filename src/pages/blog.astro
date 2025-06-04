@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getPortfolioHighlights } from '../utils/portfolio';
+
+const blog = await getCollection('blog');
+const portfolio = await getPortfolioHighlights();
+const sortedBlog = blog.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout portfolio={portfolio} slug="blog">
+  <article>
+    <h1>Blog</h1>
+    <ul class="blog-list">
+      {sortedBlog.map((post) => (
+        <li class="blog-item">
+          <a href={`/blog/${post.slug}`} class="blog-link">
+            <h2>{post.data.title}</h2>
+            <time datetime={post.data.pubDate.toISOString()}>
+              {post.data.pubDate.toLocaleDateString()}
+            </time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </article>
+</Layout>
+
+<style>
+  article {
+    width: 40vw;
+    max-width: 800px;
+    margin: 20vh auto;
+  }
+  
+  .blog-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+  }
+  
+  .blog-item {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--medium-gray);
+    padding-bottom: 1rem;
+  }
+  
+  .blog-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+  .blog-link:hover h2 {
+    color: var(--primary-color, #333);
+  }
+  
+  .blog-link h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+  }
+  
+  .blog-link time {
+    color: var(--text-muted, #666);
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 800px) {
+    article {
+      width: 100%;
+      max-width: auto;
+    }
+  }
+</style>

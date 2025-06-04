@@ -1,0 +1,79 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getPortfolioHighlights } from '../../utils/portfolio';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+const portfolio = await getPortfolioHighlights();
+---
+
+<Layout portfolio={portfolio} slug={post.slug}>
+  <article>
+    <header>
+      <h1>{post.data.title}</h1>
+      <time datetime={post.data.pubDate.toISOString()}>
+        {post.data.pubDate.toLocaleDateString()}
+      </time>
+    </header>
+    <div class="content">
+      <Content />
+    </div>
+    <footer>
+      <p>&copy; {new Date().getFullYear()} Patrick Canfield</p>
+      <a href="/blog" class="back-link">← Back to Blog</a>
+    </footer>
+  </article>
+</Layout>
+
+<style>
+  article {
+    width: 50vw;
+    margin: 20vh auto;
+  }
+  
+  header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--medium-gray);
+    padding-bottom: 1rem;
+  }
+  
+  header h1 {
+    margin: 0 0 0.5rem 0;
+  }
+  
+  header time {
+    color: var(--text-muted, #666);
+    font-size: 0.9rem;
+  }
+  
+  .content {
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+  
+  footer {
+    border-top: 1px solid var(--medium-gray);
+    padding-top: 1rem;
+  }
+  
+  .back-link {
+    text-decoration: none;
+    color: var(--primary-color, #333);
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+</style>
