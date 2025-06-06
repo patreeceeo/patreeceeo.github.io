@@ -1,7 +1,7 @@
 ---
 title: Playshop
 image: ./game-workshop.jpg
-sortOrder: 7
+sortOrder: 3
 ---
 
 ![event flier](./game-workshop.jpg)

@@ -18,11 +18,11 @@ Now with touch screen controls!
 <summary>Techno-babble</summary>
 Written in TypeScript using THREE.js for rendering, Blender for 3D assets. A simple Node.js Express backend facilitates the level editor.
 
-Though the gameplay is 2D, I've implemented it in 3D because I have aspirations to make the gameplay 3D.
+Though essentially a 2D game, I'm using a 3D graphics library with an orthographic camera because of it's superior capabilities and performance compared to available 2D libraries. It also gives me the flexibility to use 3D models or sprites implemented as billboards. I use a post-processor to make everything look like pixel art.
 
-At the core is a reactive state manager/ECS that I (unfortunately) wrote from scratch. I didn't think it would get so complicated! It does integrate nicely with the editor backend, though.
+At the core is a reactive state manager/ECS that I wrote from scratch which plays well with the editor backend.
 
-More justifiably, I also devised a non-blocking spatially-addressed message passing system to allow entities (e.g. the player and a block) to communicate with each other without being tightly coupled.
+I also devised [spatially message passing system](blog/zmbn-spatial-messages) to allow entities (e.g. the player and a block) to communicate with each other without being tightly coupled.
 
 </details>
 
