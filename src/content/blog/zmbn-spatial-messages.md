@@ -143,9 +143,7 @@ by checking if the block can move into the tile in the direction it's being push
         )
       )
 
-      if (
-        response === MoveMessage.Response.Blocked
-      ) {
+      if (response === MoveMessage.Response.Blocked) {
         return MoveMessage.Response.Blocked;
       }
 
