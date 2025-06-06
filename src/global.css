@@ -9,9 +9,10 @@ article img {
 }
 
 :root {
+  --light-blue: #e0f2ff;
   --blue: #0070f3;
-  --gray: #333;
   --light-gray: #f7f7f7;
+  --gray: #333;
   --medium-gray: #ddd;
 
   --font-serif: 'Charter', 'Bitstream Charter', 'Sitka Text', Cambria, serif;
