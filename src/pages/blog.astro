@@ -14,12 +14,12 @@ const sortedBlog = blog.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate
     <ul class="blog-list">
       {sortedBlog.map((post) => (
         <li class="blog-item">
-          <a href={`/blog/${post.slug}`} class="blog-link">
+          <a href={`/blog/${post.slug}`}>
             <h2>{post.data.title}</h2>
-            <time datetime={post.data.pubDate.toISOString()}>
-              {post.data.pubDate.toLocaleDateString()}
-            </time>
           </a>
+          <time datetime={post.data.pubDate.toISOString()}>
+            {post.data.pubDate.toLocaleDateString()}
+          </time>
         </li>
       ))}
     </ul>

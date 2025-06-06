@@ -1,9 +1,7 @@
 ---
-title: ""
+title: "Spatial Message Passing: A Communication System for Grid-Based Games"
 pubDate: 2025-06-03
 ---
-
-# Spatial Message Passing: A Communication System for Grid-Based Games
 
 ## Introduction
 
