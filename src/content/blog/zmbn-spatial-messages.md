@@ -27,7 +27,7 @@ Spatial messaging offers a middle ground: entities send typed messages to specif
 
 The system consists of three core components:
 
-1. Messages (src/Message.ts:31-48)
+1. Messages (src/Message.ts)
 
 ```typescript
 export abstract class Message<Answer> {
@@ -45,7 +45,7 @@ export abstract class Message<Answer> {
 Messages are typed requests with expected response types. For example, `MoveMessage.Into` expects a `Response.Allowed`
 or `Response.Blocked` answer.
 
-2. Spatial Delivery (src/Message.ts:57-80)
+2. Spatial Delivery (src/Message.ts)
 
 ```typescript
 export function sendMessage<PResponse>(
@@ -67,7 +67,7 @@ export function sendMessage<PResponse>(
 Messages are delivered to all entities at a specific tile coordinate. The TileMatrix efficiently finds entities by
 position.
 
-3. Behavior Handlers (src/systems/BehaviorSystem.ts:56-65)
+3. Behavior Handlers (src/systems/BehaviorSystem.ts)
 
 ```typescript
 onReceive<PResponse>(
@@ -88,7 +88,7 @@ Each entity behavior defines handlers for message types it cares about, using a 
 
 When a player pushes a block, here's the message flow:
 
-1. Player sends `MoveMessage.Into` to the tile they want to move into. They use a helper function to reduce the responses to a single yes or no, since there can be multiple entities there. If they are allowed, then they queue a move action. (src/behaviors/PlayerBehavior.ts:72-83):
+1. Player sends `MoveMessage.Into` to the tile they want to move into. They use a helper function to reduce the responses to a single yes or no, since there can be multiple entities there. If they are allowed, then they queue a move action. (src/behaviors/PlayerBehavior.ts):
 
 ```typescript
 const responses = sendMessage(
@@ -102,49 +102,10 @@ if (response === MoveMessage.Response.Allowed) {
 }
 ```
 
-2. Block receives their message and sends a special move message to the player's tile position (src/behaviors/BlockBehavior.ts:99-133):
-
-```typescript
-    [MoveMessage.Into.type]: (
-      entity: Entity,
-      context: BehaviorContext,
-      message: Message<any>
-    ): MessageAnswer<MoveMessage.Into> => {
-        const { sender } = message;
-        ...
-          sendMessage(
-            new MoveMessage.IntoBlock(entity),
-            sender.tilePosition,
-            context
-          )
-        ...
-    }
-```
-
-3. When the player receives the special move message, they respond that they are allowed to move into blocks (src/behaviors/PlayerBehavior.ts:119):
-
-```typescript
-[MoveMessage.IntoBlock.type]: () => MoveMessage.Response.Allowed,
-```
-
-4. Which the block receives, and since the player says they're allowed to move, we continue
-by checking if the block can move into the tile in the direction it's being pushed. If the block is blocked, then the player is blocked. (src/behaviors/BlockBehavior.ts:99-133 again):
+2. If there's a block in the tile the player is trying to move into, it receives the player's message, which is handles by checking if the block can move into the tile in the direction it's being pushed. The response from that message is returned as the response for the player's message. (src/behaviors/BlockBehavior.ts):
 
 ```typescript
       const { sender } = message;
-
-      const response = MoveMessage.reduceResponses(
-        sendMessage(
-          new MoveMessage.IntoBlock(entity),
-          sender.tilePosition,
-          context
-        )
-      )
-
-      if (response === MoveMessage.Response.Blocked) {
-        return MoveMessage.Response.Blocked;
-      }
-
       const senderPosition = sender.tilePosition;
       const receiverPosition = entity.tilePosition;
       const nextTilePosition = this.computeNextTilePosition(
@@ -159,6 +120,47 @@ by checking if the block can move into the tile in the direction it's being push
 ```
 
 Note that the chain of messages when determining if the player can move can extend beyond just one other entity, but can be arbitrarily long. This comes in handy when there's blocks that can be bunched up in a row, and the player tries to push from one end.
+
+3. Finally, we determine whether the block should move, and in what direction. To do that, we wait until the end of the frame and look back on the responses given to the messages the block has received and adding up the vectors of the messages that have an "allowed" response. The resulting vector, if not zero, becomes the direction of the block's movement.
+
+```typescript
+  onUpdateLate(entity: Entity, context: TimeState) {
+    const actions = [] as Action<any, any>[];
+    const { inbox } = entity;
+
+    // Determine whether I'm being pushed and in what direction, using the correspondence in my inbox
+    const intoMessages = inbox.getAll(MoveMessage.Into);
+
+    let deltaX = 0;
+    let deltaY = 0;
+    for (const { response, sender } of intoMessages) {
+      // console.log("Response from MoveIntoMessage in block's inbox", response);
+      if (response === undefined || response === MoveMessage.Response.Allowed) {
+        const senderPosition = sender.transform.position;
+        const receiverPosition = entity.transform.position;
+        const delta = this.computeTileDelta(
+          senderPosition,
+          receiverPosition,
+          vecInTiles
+        );
+        deltaX += delta.x;
+        deltaY += delta.y;
+      }
+    }
+
+    if (deltaX !== 0 || deltaY !== 0) {
+      actions.push(
+        new MoveAction(
+          entity,
+          context.time,
+          MOVE_DURATION,
+          new Vector3(convertToTilesMax(deltaX), convertToTilesMax(deltaY))
+        )
+      );
+    }
+    return actions;
+  }
+```
 
 ### Benefits & Trade-offs
 
@@ -230,7 +232,7 @@ if (target instanceof Wall) {
 
 Instead, the system uses a two-step dispatch:
 
-Step 1: Generic message (src/behaviors/PlayerBehavior.ts:72-76)
+Step 1: Generic message (src/behaviors/PlayerBehavior.ts)
 
 ```typescript
 const responses = sendMessage(
@@ -240,7 +242,7 @@ const responses = sendMessage(
 );
 ```
 
-Step 2: Specific message (src/behaviors/BlockBehavior.ts:99-133)
+Step 2: Specific message (src/behaviors/BlockBehavior.ts)
 
 ```typescript
 [MoveMessage.Into.type]: (entity: Entity, context: BehaviorContext, message: Message<any>) => {
@@ -255,7 +257,7 @@ Step 2: Specific message (src/behaviors/BlockBehavior.ts:99-133)
 }
 ```
 
-Step 3: Type-specific handling (src/behaviors/PlayerBehavior.ts:98-109)
+Step 3: Type-specific handling (src/behaviors/PlayerBehavior.ts)
 
 ```typescript
 [MoveMessage.IntoBlock.type]: () => MoveMessage.Response.Blocked,
