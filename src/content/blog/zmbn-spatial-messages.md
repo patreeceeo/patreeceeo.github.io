@@ -27,7 +27,7 @@ Spatial messaging offers a middle ground: entities send typed messages to specif
 
 The system consists of three core components:
 
-1. Messages (src/Message.ts)
+1. Messages ([src/Message.ts](https://github.com/patreeceeo/zomboban/blob/main/src/Message.ts))
 
 ```typescript
 export abstract class Message<Answer> {
@@ -45,7 +45,7 @@ export abstract class Message<Answer> {
 Messages are typed requests with expected response types. For example, `MoveMessage.Into` expects a `Response.Allowed`
 or `Response.Blocked` answer.
 
-2. Spatial Delivery (src/Message.ts)
+2. Spatial Delivery ([src/Message.ts](https://github.com/patreeceeo/zomboban/blob/main/src/Message.ts))
 
 ```typescript
 export function sendMessageToTile<PResponse>(
@@ -67,7 +67,7 @@ export function sendMessageToTile<PResponse>(
 Messages are delivered to all entities at a specific tile coordinate. The TileMatrix efficiently finds entities by
 position.
 
-3. Behavior Handlers (src/systems/BehaviorSystem.ts)
+3. Behavior Handlers ([src/systems/BehaviorSystem.ts](https://github.com/patreeceeo/zomboban/blob/main/src/systems/BehaviorSystem.ts))
 
 ```typescript
 onReceive<PResponse>(
@@ -88,7 +88,7 @@ Each entity behavior defines handlers for message types it cares about, using a 
 
 When a player pushes a block, here's the message flow:
 
-1. Player sends `MoveMessage.Into` to the tile they want to move into. They use a helper function to reduce the responses to a single yes or no, since there can be multiple entities there. If they are allowed, then they queue a move action. (src/behaviors/PlayerBehavior.ts):
+1. Player sends `MoveMessage.Into` to the tile they want to move into. They use a helper function to reduce the responses to a single yes or no, since there can be multiple entities there. If they are allowed, then they queue a move action. ([src/behaviors/PlayerBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/PlayerBehavior.ts)):
 
 ```typescript
 const responses = sendMessageToTile(
@@ -102,7 +102,7 @@ if (response === MoveMessage.Response.Allowed) {
 }
 ```
 
-2. If there's a block in the tile the player is trying to move into, it receives the player's message, which is handles by checking if the block can move into the tile in the direction it's being pushed. The response from that message is returned as the response for the player's message. (src/behaviors/BlockBehavior.ts):
+2. If there's a block in the tile the player is trying to move into, it receives the player's message, which is handles by checking if the block can move into the tile in the direction it's being pushed. The response from that message is returned as the response for the player's message. ([src/behaviors/BlockBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/BlockBehavior.ts)):
 
 ```typescript
       const { sender } = message;
@@ -121,7 +121,7 @@ if (response === MoveMessage.Response.Allowed) {
 
 Note that the chain of messages when determining if the player can move can extend beyond just one other entity, but can be arbitrarily long. This comes in handy when there's blocks that can be bunched up in a row, and the player tries to push from one end.
 
-3. Finally, we determine whether the block should move, and in what direction. To do that, we wait until the end of the frame and look back on the responses given to the messages the block has received and adding up the vectors of the messages that have an "allowed" response. The resulting vector, if not zero, becomes the direction of the block's movement.
+3. Finally, we determine whether the block should move, and in what direction. To do that, we wait until the end of the frame and look back on the responses given to the messages the block has received and adding up the vectors of the messages that have an "allowed" response. The resulting vector, if not zero, becomes the direction of the block's movement. ([src/behaviors/BlockBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/BlockBehavior.ts)):
 
 ```typescript
   onUpdateLate(entity: Entity, context: TimeState) {
@@ -222,7 +222,7 @@ if (target instanceof Wall) {
 
 Instead, the system uses a two-step dispatch:
 
-Step 1: Send a message to other entities signifying some intended action (src/behaviors/PlayerBehavior.ts)
+Step 1: Send a message to other entities signifying some intended action. ([src/behaviors/PlayerBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/PlayerBehavior.ts)):
 
 ```typescript
 const responses = sendMessageToTile(
@@ -232,7 +232,7 @@ const responses = sendMessageToTile(
 );
 ```
 
-Step 2: Entities send back a message that specifies the type of entity being interacted with (src/behaviors/BlockBehavior.ts)
+Step 2: Entities send back a message that specifies the type of entity being interacted with. ([src/behaviors/BlockBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/BlockBehavior.ts))
 
 ```typescript
 [MoveMessage.Into.type]: (entity: Entity, context: BehaviorContext, message: Message<any>) => {
@@ -245,7 +245,7 @@ Step 2: Entities send back a message that specifies the type of entity being int
 }
 ```
 
-Step 3: The sender receives that message and now knows what it should do (src/behaviors/PlayerBehavior.ts)
+Step 3: The sender receives that message and now knows what it should do ([src/behaviors/PlayerBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/PlayerBehavior.ts))
 
 ```typescript
 [MoveMessage.IntoWall.type]: () => MoveMessage.Response.Blocked,
