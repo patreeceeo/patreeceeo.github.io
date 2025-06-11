@@ -48,19 +48,40 @@ or `Response.Blocked` answer.
 2. Spatial Delivery ([src/Message.ts](https://github.com/patreeceeo/zomboban/blob/main/src/Message.ts))
 
 ```typescript
+export function sendMessage<PResponse>(
+  msg: Message<PResponse>,
+  receiver: ITileActor,
+  context: BehaviorState & ITilesState
+): PResponse | undefined {
+  const { sender } = msg;
+    receiver.inbox.add(msg);
+    sender.outbox.add(msg);
+    const behavior = context.getBehavior(receiver.behaviorId);
+    const response = behavior.onReceive(msg, receiver, context);
+    msg.response ??= response;
+    return response;
+}
+
 export function sendMessageToTile<PResponse>(
   msg: Message<PResponse>,
   tilePosition: Vector3,
   context: BehaviorState & ITilesState
 ): Iterable<PResponse | undefined> {
-  const receivers = getReceivers(context.tiles, tilePosition);
+  const { sender } = msg;
+  const responses = [] as (PResponse | undefined)[];
+
+  const receivers = getReceivers(
+    context.tiles,
+    tilePosition,
+    sender
+  );
 
   for (const receiver of receivers) {
-    const behavior = context.getBehavior(receiver.behaviorId);
-    const response = behavior.onReceive(msg, receiver, context);
-    receiver.inbox.add(msg);
-    sender.outbox.add(msg);
+    const response = sendMessage(msg, receiver, context)
+    responses.push(response);
   }
+
+  return responses;
 }
 ```
 
@@ -102,7 +123,7 @@ if (response === MoveMessage.Response.Allowed) {
 }
 ```
 
-2. If there's a block in the tile the player is trying to move into, it receives the player's message, which is handles by checking if the block can move into the tile in the direction it's being pushed. The response from that message is returned as the response for the player's message. ([src/behaviors/BlockBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/BlockBehavior.ts)):
+2. If there's a block in the tile the player is trying to move into, it receives the player's message, which it handles by checking if the block can move into the tile in the direction it's being pushed. The response from that message is returned as the response for the player's message. ([src/behaviors/BlockBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/BlockBehavior.ts)):
 
 ```typescript
       const { sender } = message;
@@ -119,9 +140,9 @@ if (response === MoveMessage.Response.Allowed) {
       );
 ```
 
-Note that the chain of messages when determining if the player can move can extend beyond just one other entity, but can be arbitrarily long. This comes in handy when there's blocks that can be bunched up in a row, and the player tries to push from one end.
+Note that the chain of messages when determining if the player can move can extend beyond just one other entity, but can be arbitrarily long. This comes in handy when there's blocks that can be bunched up in a row, and the player tries to push from one end or the other.
 
-3. Finally, we determine whether the block should move, and in what direction. To do that, we wait until the end of the frame and look back on the responses given to the messages the block has received and adding up the vectors of the messages that have an "allowed" response. The resulting vector, if not zero, becomes the direction of the block's movement. ([src/behaviors/BlockBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/BlockBehavior.ts)):
+3. Finally, the block determines whether it should move, and in what direction. To do that, it waits until the end of the frame and looks back on the responses given to the messages it has received. The sum of the vectors of the messages that have an "allowed" response, if not zero, becomes the direction of its movement. ([src/behaviors/BlockBehavior.ts](https://github.com/patreeceeo/zomboban/blob/main/src/behaviors/BlockBehavior.ts)):
 
 ```typescript
   onUpdateLate(entity: Entity, context: TimeState) {
