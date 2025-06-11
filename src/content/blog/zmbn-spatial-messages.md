@@ -48,7 +48,7 @@ or `Response.Blocked` answer.
 2. Spatial Delivery (src/Message.ts)
 
 ```typescript
-export function sendMessage<PResponse>(
+export function sendMessageToTile<PResponse>(
   msg: Message<PResponse>,
   tilePosition: Vector3,
   context: BehaviorState & ITilesState
@@ -91,7 +91,7 @@ When a player pushes a block, here's the message flow:
 1. Player sends `MoveMessage.Into` to the tile they want to move into. They use a helper function to reduce the responses to a single yes or no, since there can be multiple entities there. If they are allowed, then they queue a move action. (src/behaviors/PlayerBehavior.ts):
 
 ```typescript
-const responses = sendMessage(
+const responses = sendMessageToTile(
   new MoveMessage.Into(entity),
   _nextTilePosition,
   context
@@ -115,7 +115,7 @@ if (response === MoveMessage.Response.Allowed) {
       );
 
       return MoveMessage.reduceResponses(
-        sendMessage(new MoveMessage.Into(entity), nextTilePosition, context)
+        sendMessageToTile(new MoveMessage.Into(entity), nextTilePosition, context)
       );
 ```
 
@@ -183,24 +183,16 @@ Looking at the message types in src/messages.ts, you'll notice an interesting pa
 export class Into extends Message<Response> {
   static type = "MoveInto";
 }
-```
 
-```typescript
 export class IntoWall extends Message<Response> {
   static type = "MoveIntoWall";
 }
-```
 
-```typescript
 export class IntoBlock extends Message<Response> {
   static type = "MoveIntoBlock";
 }
-```
 
-```typescript
-export class IntoPlayer extends Message<Response> {
-  static type = "MoveIntoPlayer";
-}
+// ...etc
 ```
 
 Why have both `MoveMessage.Into` and specialized variants like `MoveMessage.IntoWall`? This implements the double
@@ -210,8 +202,6 @@ dispatch pattern – a technique for handling interactions between different typ
 
 Consider what happens when a player moves into different entities:
 - Moving into a wall: Always blocked
-- Moving into a block: Block should try to move, player moves if successful
-- Moving into a fire: Player dies and level restarts
 - Moving into a monster: Player dies and level restarts
 
 Each combination of "mover type" + "target type" requires different logic. Without double dispatch, you'd need ugly
@@ -232,95 +222,65 @@ if (target instanceof Wall) {
 
 Instead, the system uses a two-step dispatch:
 
-Step 1: Generic message (src/behaviors/PlayerBehavior.ts)
+Step 1: Send a message to other entities signifying some intended action (src/behaviors/PlayerBehavior.ts)
 
 ```typescript
-const responses = sendMessage(
+const responses = sendMessageToTile(
   new MoveMessage.Into(entity),  // Generic "something wants to move here"
   _nextTilePosition,
   context
 );
 ```
 
-Step 2: Specific message (src/behaviors/BlockBehavior.ts)
+Step 2: Entities send back a message that specifies the type of entity being interacted with (src/behaviors/BlockBehavior.ts)
 
 ```typescript
 [MoveMessage.Into.type]: (entity: Entity, context: BehaviorContext, message: Message<any>) => {
-  // Block received generic "Into" message, now sends specific "IntoBlock" message
-  return MoveMessage.reduceResponses(
-    sendMessage(
-      new MoveMessage.IntoBlock(entity),  // "A block is being pushed"
-      message.sender.tilePosition,
+    return sendMessage(
+      new MoveMessage.IntoWall(entity),  // You're trying to move into a wall
+      message,
       context
     )
   );
 }
 ```
 
-Step 3: Type-specific handling (src/behaviors/PlayerBehavior.ts)
+Step 3: The sender receives that message and now knows what it should do (src/behaviors/PlayerBehavior.ts)
 
 ```typescript
-[MoveMessage.IntoBlock.type]: () => MoveMessage.Response.Blocked,
 [MoveMessage.IntoWall.type]: () => MoveMessage.Response.Blocked,
-[MoveMessage.IntoFire.type]: (_: Entity, context: BehaviorContext) => {
-  handleRestart(context);  // Player dies
-}
 ```
-
-### Why This Works
-
-1. First dispatch: Based on the target's type (what entity receives the message)
-2. Second dispatch: Based on the sender's type (what specific message gets sent back)
-
-This allows each entity type to:
-- Define how it responds to being moved into
-- Define how it responds to moving into other specific types
-
-For example, a Monster might:
-- Send MoveMessage.IntoPlayer when moving into a player (to kill them)
-- Handle MoveMessage.IntoMonster by blocking movement (monsters can't stack)
-- Handle MoveMessage.IntoWall by blocking movement
 
 ### Benefits of Double Dispatch
 
-Type Safety: Each message type has a clear semantic meaning
+#### Each message type has a clear semantic meaning
 
 ```typescript
-// Clear intent: "A monster is attacking"
+// Clear intent: "A monster is blocking movement"
 new MoveMessage.IntoMonster(monster)
 ```
 
 ```typescript
-// vs unclear: "Something is moving"
-new MoveMessage.Into(monster)
+// vs unclear: "Something is blocking movement, lemme inspect the entity it came from"
+new MoveIntoMessage(monster)
 ```
 
-Extensibility: Adding new entity types only requires:
+#### Extensibility: Adding new entity types only requires:
+
 1. A new message type (MoveMessage.IntoNewThing)
 2. Handlers for that message type in relevant behaviors
 
-Clean Separation: Each entity defines its own interaction rules without knowing about every other entity type.
+#### Clean Separation
 
-Emergent Complexity: Complex interactions emerge from simple, local rules rather than centralized interaction
-matrices.
+Each entity defines its own interaction rules without knowing about every other entity type.
 
-### Real-World Example
+#### Emergent Complexity
 
-When a player pushes a block toward a wall:
-
-1. Player sends MoveMessage.Into to target position
-2. Block receives it, sends MoveMessage.IntoBlock back to player position
-3. Player responds to MoveMessage.IntoBlock by claiming they can move into blocks (which is sorta true)
-4. Block sends MoveMessage.Into to its target position (wall)
-5. Wall receives it, sends MoveMessage.IntoWall back to block position
-6. Block handles MoveMessage.IntoWall by returning Response.Blocked
-7. Player receives Response.Blocked and doesn't move
-
-This chain of double dispatches creates the correct "push a block against a wall" behavior without any entity
-needing to know about the others' implementation details.
-
-The double dispatch pattern transforms what could be a complex interaction matrix into a series of simple, local
+Complex interactions emerge from simple, local rules rather than centralized interaction
+matrices. The double dispatch pattern transforms what could be a complex interaction matrix into a series of simple, local
 decisions that compose into sophisticated gameplay.
+
+### YMMV
 
 Of course, sometimes this pattern is overkill and a simple conditional is sufficient. This system doesn't require double dispatch for every interaction, but it shines when you have multiple entity types that need to interact in complex ways, in which case you probably do want double dispatch.
 
