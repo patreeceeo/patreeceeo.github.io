@@ -23,7 +23,7 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
   }
 
   navigateToSelection() {
-    location.hash = `${this.element.value}`;
+    location.href = `/#${this.element.value}`;
   }
 
   onScroll = () => {
