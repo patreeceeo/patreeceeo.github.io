@@ -5,11 +5,11 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
     value: String,
   };
 
-  slugs: string[] = [];
+  hrefs: string[] = [];
 
   connect() {
     this.setValue();
-    this.slugs = this.data.get('slugs')?.split(',') || [];
+    this.hrefs = this.data.get('hrefs')?.split(',') || [];
     window.addEventListener('scroll', this.onScroll, { passive: true });
   }
 
@@ -23,15 +23,15 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
   }
 
   navigateToSelection() {
-    location.href = `/#${this.element.value}`;
+    location.href = this.element.value;
   }
 
   onScroll = () => {
-    const { slugs } = this;
+    const { hrefs } = this;
     // Remove the selected class from all items
-    const selectedSlug = decideSelectedSlug(slugs);
-    if (selectedSlug) {
-      this.element.value = selectedSlug;
+    const selectedHref = decideSelectedHref(hrefs);
+    if (selectedHref) {
+      this.element.value = selectedHref;
     }
   }
 }
@@ -58,7 +58,7 @@ export class NavSidebarController extends Controller<HTMLElement> {
       const target = targets.find(slug)!;
       target.classList.remove('Sidebar_item--selected');
     }
-    const selectedSlug = decideSelectedSlug(slugs);
+    const selectedSlug = decideSelectedHref(slugs);
     if (selectedSlug) {
       const target = targets.find(selectedSlug)!;
       target.classList.add('Sidebar_item--selected');
@@ -66,20 +66,20 @@ export class NavSidebarController extends Controller<HTMLElement> {
   }
 }
 
-function decideSelectedSlug(slugs: string[]): string | undefined {
+function decideSelectedHref(hrefs: string[]): string | undefined {
   const viewportHeight = window.innerHeight;
   const halfViewportHeight = viewportHeight >> 1;
-  const slugCount = slugs.length;
-  const selectedSlug = slugs.find((slug) => {
-    const element = document.getElementById(slug);
+  const count = hrefs.length;
+  const selectedHref = hrefs.find((href) => {
+    const element = document.getElementById(href.slice(2));
     if (element) {
       const { top, bottom } = element.getBoundingClientRect();
-      const slugIndex = slugs.indexOf(slug);
-      const bottomThreshold = halfViewportHeight * (slugIndex / slugCount);
+      const index = hrefs.indexOf(href);
+      const bottomThreshold = halfViewportHeight * (index / count);
         // Return true if any part of the element is in the viewport
       return top < viewportHeight && bottom > bottomThreshold
     }
     return false;
   });
-  return selectedSlug;
+  return selectedHref;
 }

@@ -6,12 +6,14 @@ import '../normalize.css';
 import '../global.css';
 import NavSelect from '../components/NavSelect.astro';
 import ImageLink from '../components/ImageLink.astro';
+import {getNavigationItems} from '../utils/navigation';
 
 export interface Props {
   portfolio: Array<CollectionEntry<"portfolio">>;
-  slug: string;
 }
-const { portfolio, slug } = Astro.props as Props;
+const { portfolio } = Astro.props as Props;
+
+const navItems = await getNavigationItems(portfolio)
 ---
 <!doctype html>
 <html lang="en">
@@ -28,11 +30,11 @@ const { portfolio, slug } = Astro.props as Props;
   </head>
 	<body>
     <div class="sidebar-responsive">
-      <Sidebar portfolio={portfolio} selected={slug}/>
+      <Sidebar navItems={navItems}/>
     </div>
     <div class="select-responsive">
       <ImageLink href="/" imageCssUrl={`url(${portfolio[0].data.image.src})`} height="auto" width="height"/>
-      <NavSelect portfolio={portfolio} slug={slug} />
+      <NavSelect navItems={navItems}/>
     </div>
     <main>
       <slot />

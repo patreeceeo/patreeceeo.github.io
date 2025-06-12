@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getPortfolioHighlights } from '../utils/portfolio';
 import PortfolioDetail from '../components/PortfolioDetail.astro';
+import { getPortfolioHighlights } from '../utils/portfolio';
 const portfolio = await getPortfolioHighlights();
 ---
 
-<Layout portfolio={portfolio} slug={portfolio[0].slug}>
+<Layout portfolio={portfolio}>
   {portfolio.map((item) => (
     <article id={item.slug}>
       <h1>{item.data.title}</h1>

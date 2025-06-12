@@ -1,45 +1,33 @@
 ---
-import type {CollectionEntry} from 'astro:content';
+import type { NavigationItem } from '../utils/navigation';
 import image from '../content/portfolio/me-duck.webp';
 import ImageLink from './ImageLink.astro';
-// Sidebar.astro: Receives a `portfolio` prop (array of entries)
+
 export interface Props {
-  portfolio: Array<CollectionEntry<'portfolio'>>;
-  selected: string;
+  navItems: NavigationItem[];
 }
-const { portfolio } = Astro.props;
+const { navItems } = Astro.props;
 const width = "20vw";
 
 ---
-<aside class="Sidebar" data-controller="nav-sidebar thumbnail" data-nav-sidebar-slugs={portfolio.map(item => item.slug).join(",")}>
+<aside class="Sidebar" data-controller="nav-sidebar thumbnail" data-nav-sidebar-slugs={navItems.filter(item => item.imageSrc).map(item => item.id).join(",")}>
   <div class="Sidebar_thumbnail-container">
     <ImageLink href="/" width="auto" height="100%" imageCssUrl={`url(${image.src})`} data-thumbnail-target="thumbnail"/>
   </div>
   <nav class="Sidebar_nav">
     <ul class="Sidebar_list">
-      {portfolio.map(item => (
-        <li class="Sidebar_item" data-nav-sidebar-target={item.slug}>
+      {navItems.map(item => (
+        <li class="Sidebar_item" data-nav-sidebar-target={item.id}>
           <a
-            href={"/#" + item.slug}
+            href={item.href}
             class="h1 noTextWrap"
-            data-action="
-              mouseover->thumbnail#set
-              mouseout->thumbnail#reset"
-            data-thumbnail-src-param={item.data.image.src}
+            data-action={item.imageSrc ? "mouseover->thumbnail#set mouseout->thumbnail#reset" : ""}
+            data-thumbnail-src-param={item.imageSrc}
           >
-            {item.data.title}
+            {item.title}
           </a>
         </li>
       ))}
-      <li class="Sidebar_item">
-        <a href="/blog" class="h1 noTextWrap">
-          Blog
-        </a>
-      </li>
-      <li class="Sidebar_item">
-        <a href="/resume.pdf" class="h1 noTextWrap">
-          Resumé
-        </a>
     </ul>
   </nav>
 </aside>

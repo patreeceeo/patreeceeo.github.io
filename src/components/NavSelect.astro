@@ -1,29 +1,29 @@
 ---
-import type {CollectionEntry} from 'astro:content';
+import type { NavigationItem } from '../utils/navigation';
 
 export interface Props {
-  portfolio: Array<CollectionEntry<"portfolio">>;
-  slug: string;
+  navItems: NavigationItem[];
 }
 
-const { portfolio, slug } = Astro.props as Props;
+const { navItems } = Astro.props as Props;
+const selectedHref = navItems[0].href;
 ---
 <div class="NavSelect">
   <select
     class="NavSelect_select"
     data-controller="nav-select"
-    data-nav-select-value={slug}
-    data-nav-select-default-value={portfolio[0].slug}
-    data-nav-select-slugs={portfolio.map(item => item.slug).join(",")}
+    data-nav-select-value={selectedHref}
+    data-nav-select-default-value={selectedHref}
+    data-nav-select-hrefs={navItems.map(item => item.href).join(",")}
     data-action="
       change->nav-select#navigateToSelection
       pageshow@window->nav-select#setValue
       "
-    aria-label="Portfolio Navigation"
+    aria-label="Navigation"
   >
-    {portfolio.map((item) => {
-      const selected = item.slug === slug;
-      return <option value={item.slug} selected={selected}>{item.data.title}</option>
+    {navItems.map((item) => {
+      const selected = item.href === selectedHref;
+      return <option value={item.href} selected={selected}>{item.title}</option>
     })}
   </select>
 </div>
