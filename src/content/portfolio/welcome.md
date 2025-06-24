@@ -4,6 +4,12 @@ image: "./me-duck.webp"
 sortOrder: 0
 ---
 
+> The limits of my language are the limits of my world. -- Wittgenstein
+
+> We have no limits here. The only limit is our imagination. -- Bob Ross
+
+> talk less and draw more. -- Goethe
+
 Hi, I'm Patrick. I make things.
 
 - 2D & 3D art
