@@ -14,7 +14,7 @@ Hi, I'm Patrick. I'm interested in creativity. Specifically, creative uses of te
 
 Also, I:
 - have a [background in Software Engineering](/resume.pdf) and a degree in Computer Science.
-- draw [comix and make 2D & 3D art](/#art)!
+- draw [comix and make 2D & 3D art](/#art).
 - am interested in games that are enriching, perhaps even educational, and also fun.
 - pursue some things that might be unattainable. To only go after what can easily be had, what a dull existence!
 - made this website ([source code](https://github.com/patreeceeo/patreeceeo.github.io)) using [Astro](https://astro.build), an "islands architecture" framework. It's hosted on GitHub Pages.
