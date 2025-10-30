@@ -6,6 +6,7 @@ import '../normalize.css';
 import '../global.css';
 import NavSelect from '../components/NavSelect.astro';
 import ImageLink from '../components/ImageLink.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import {getNavigationItems} from '../utils/navigation';
 
 export interface Props {
@@ -35,6 +36,9 @@ const navItems = await getNavigationItems(portfolio)
     <div class="select-responsive">
       <ImageLink href="/" imageCssUrl={`url(${portfolio[0].data.image.src})`} height="auto" width="height"/>
       <NavSelect navItems={navItems}/>
+      <div class="select-responsive-social">
+        <SocialLinks />
+      </div>
     </div>
     <main>
       <slot />
@@ -65,6 +69,11 @@ const navItems = await getNavigationItems(portfolio)
     padding: 1rem;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.75);
+    align-items: center;
+  }
+  .select-responsive-social {
+    flex-shrink: 0;
+    margin-left: 1rem;
   }
   @media (max-width: 800px) {
     main {

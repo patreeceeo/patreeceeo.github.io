@@ -11,6 +11,9 @@ export class NavSelectController extends Controller<HTMLSelectElement> {
     this.setValue();
     this.hrefs = this.data.get('hrefs')?.split(',') || [];
     window.addEventListener('scroll', this.onScroll, { passive: true });
+
+    // Override the SELECT element's default width behavior, allowing it to become smaller than its content
+    this.element.style.width = '0';
   }
 
   disconnect() {

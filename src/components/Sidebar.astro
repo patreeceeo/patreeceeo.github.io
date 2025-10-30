@@ -2,6 +2,7 @@
 import type { NavigationItem } from '../utils/navigation';
 import image from '../content/portfolio/me-duck.webp';
 import ImageLink from './ImageLink.astro';
+import SocialLinks from './SocialLinks.astro';
 
 export interface Props {
   navItems: NavigationItem[];
@@ -30,6 +31,9 @@ const width = "20vw";
       ))}
     </ul>
   </nav>
+  <div class="Sidebar_social">
+    <SocialLinks />
+  </div>
 </aside>
 <style define:vars={{width}}>
   .Sidebar {
@@ -57,6 +61,12 @@ const width = "20vw";
     flex-grow: 1;
     flex-shrink: 0;
     flex-basis: 0;
+  }
+  .Sidebar_social {
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 1rem 0;
+    background: linear-gradient(to top, #fff, var(--light-blue));
   }
   .Sidebar_list {
     list-style: none;
