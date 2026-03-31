@@ -25,7 +25,7 @@ export async function getNavigationItems(portfolio: CollectionEntry<"portfolio">
   items.push({
     id: "resume",
     title: "Resume",
-    href: "/resume"
+    href: "/resume.pdf"
   });
 
   return items;
