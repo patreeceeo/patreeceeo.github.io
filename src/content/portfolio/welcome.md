@@ -10,12 +10,13 @@ sortOrder: 0
 
 > talk less and draw more. -- Goethe
 
-Hi, I'm Patrick. I'm interested in creativity and creative uses of software and creating software and software that can be used to create other things, including software!
+Hi, I'm Patrick. I'm interested in creativity and creative uses of software and creating software and software that can be used to create things, like software! Also interested in:
+* Science
+* Education
+* Health & Fitness
 
 I believe in the ethos and spirit of the World Wide Web: multilaterally advancing technology for the common good.
 
-I pursue radical and perhaps unattainable ends. Maybe you can get a sense of what I'm about by clicking around. Regardless, I hope you enjoy your stay!
-
-Click the social media icons to connect with me elsewhere on the web.
+Click the social media icons to connect with me elsewhere on the web. You may email me at pscale01 at gmail dot com.
 
 
