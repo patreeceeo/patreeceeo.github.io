@@ -22,5 +22,11 @@ export async function getNavigationItems(portfolio: CollectionEntry<"portfolio">
     href: "https://patrek.micro.blog",
   });
 
+  items.push({
+    id: "resume",
+    title: "Resume",
+    href: "/resume"
+  });
+
   return items;
 }
